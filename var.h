@@ -1,6 +1,10 @@
 /***********************************************************************************
  * 
- *  v 1.0.0 [at: 07.03.2022]
+ *  major  bugs(patches)
+ *   |    /
+ *  v1.1.0  [at: 03.04.2022]
+ *     |
+ *  feature package
  *
  *  by dimonpokemon81  mail: dimon19811@outlook.com
  *   
@@ -13,6 +17,7 @@
  *  
  *  if it seems to you, or something is clearly not working as it should,
  *  please write me: as short example/description/other way.
+ *  
  *                   email:  dimon19811@outlook.com               
  *                   GitHub: https://github.com/dimonpokemon81/var/issues
  *
@@ -214,17 +219,17 @@ private:
 	var& operator=(const Ic_arr &rv) const;  // not allowed [ const var ]
 	var& operator=(const Ir_arr &rv) const;  // not allowed [ const var ]
 	var& operator=(const Irc_arr &rv) const;  // not allowed [ const var ]
-	
+			
 	var(const I_str &I, const ttyp<str> *bs);  // [ inner use ]
 	var(const Ic_str &I, const ttyp<str> *bs);  // [ inner use ]
 	var(const Ir_str &I, const ttyp<str> *bs);  // [ inner use ]
 	var(const Irc_str &I, const ttyp<str> *bs);  // [ inner use ]
-	
+			
 	var(const I_arr &I, const ttyp<__vct<var>> *bs);  // [ inner use ]
 	var(const Ic_arr &I, const ttyp<__vct<var>> *bs);  // [ inner use ]
 	var(const Ir_arr &I, const ttyp<__vct<var>> *bs);  // [ inner use ]
 	var(const Irc_arr &I, const ttyp<__vct<var>> *bs);  // [ inner use ]
-		
+			
 	virtual operator var*();  // [ inner use ]
 	virtual operator __vct<var>*();  // [ inner use ]
 	virtual operator str*() const;   // [ inner use ]
@@ -281,13 +286,13 @@ private:
 	const var& operator /=(str *rv) const;  // not allowed [ const var ]
 	const var& operator /=(cch *rv) const;  // not allowed [ const var ]
 	const var& operator /=(char rv) const;  // not allowed [ const var ]		
-		
+			
 	var& operator<<(const var &src) const;  // not allowed [ const var ];
 	void reserve(size_t new_cap) const;  // not allowed [ const var ]
 	void shrink_to_fit() const;  // not allowed [ const var ]
 	void clear() const;  // not allowed [ const var ]
 	void swap(var &X) const;  // not allowed [ const var ]
-	
+			
 	void resize(size_t count) const;  // not allowed [ const var ]
 	void resize(size_t count, const var &x) const;  // not allowed [ const var ]
 	void resize(size_t count, int X) const;  // not allowed [ const var ]
@@ -300,7 +305,7 @@ private:
 	void resize(size_t count, cch *X) const;  // not allowed [ const var ]
 	void resize(size_t count, const str &X) const;  // not allowed [ const var ]
 	void resize(size_t count, __iniL<var> X) const;  // not allowed [ const var ]	
-	
+			
 	var insert(size_t index, const var &src_fist, const var &src_last) const; // not allowed [ const var ]
 	var insert(size_t index, const var &X) const;  // not allowed [ const var ]
 	var insert(size_t index, int X) const;  // not allowed [ const var ]
@@ -325,10 +330,10 @@ private:
 	var insert(size_t index, size_t count, const str &X) const;  // not allowed [ const var ]
 	var insert(size_t index, size_t count, __iniL<var> X) const; // not allowed [ const var ]		
 	var insert(size_t index, cch *src, size_t src_index, size_t src_count) const; // not allowed [ const var ]
-	
+			
 	var erase(size_t index) const;  // not allowed [ const var ]
 	var erase(size_t first, size_t last) const;  // not allowed [ const var ]
-	
+			
 	var push_back(const var &X) const;  // not allowed [ const var ]
 	var push_back(int X) const;  // not allowed [ const var ]
 	var push_back(float X) const;  // not allowed [ const var ]
@@ -340,9 +345,39 @@ private:
 	var push_back(cch *X) const;  // not allowed [ const var ]
 	var push_back(const str &x) const;  // not allowed [ const var ]
 	var push_back( __iniL<var> X) const;  // not allowed [ const var ]
+			
+	var push_front(const var &X) const;  // not allowed [ const var ]
+	var push_front(int X) const;  // not allowed [ const var ]
+	var push_front(float X) const;  // not allowed [ const var ]
+	var push_front(double X) const;  // not allowed [ const var ]
+	var push_front(long X) const;  // not allowed [ const var ]
+	var push_front(llong X) const;  // not allowed [ const var ]
+	var push_front(ullong X) const;  // not allowed [ const var ]
+	var push_front(char X) const;  // not allowed [ const var ]
+	var push_front(cch *X) const;  // not allowed [ const var ]
+	var push_front(const str &X) const;  // not allowed [ const var ]
+	var push_front( __iniL<var> X) const;  // not allowed [ const var ]
+			
 	var pop_back() const;  // not allowed [ const var ]
+	var pop_front() const;  // not allowed [ const var ]
 	
-	void initArr() const;  // not allowed [ const var ]
+	var& ssort(bool (*cmp)(var &a, var &b), bool reverse = false) const;  // not allowed [ const var ]
+	var& ssort(bool reverse = false) const;  // not allowed [ const var ]
+	var& reverse() const;  // not allowed [ const var ]
+	
+	var& fill(const var &X, size_t index = 0, size_t count = 0) const;  // not allowed [ const var ]
+	var& fill(int X, size_t index = 0, size_t count = 0) const;  // not allowed [ const var ]
+	var& fill(float X, size_t index = 0, size_t count = 0) const;  // not allowed [ const var ]
+	var& fill(double X, size_t index = 0, size_t count = 0) const;  // not allowed [ const var ]
+	var& fill(long X, size_t index = 0, size_t count = 0) const;  // not allowed [ const var ]
+	var& fill(llong X, size_t index = 0, size_t count = 0) const;  // not allowed [ const var ]
+	var& fill(ullong X, size_t index = 0, size_t count = 0) const;  // not allowed [ const var ]
+	var& fill(char X, size_t index = 0, size_t count = 0) const;  // not allowed [ const var ]
+	var& fill(cch *X, size_t index = 0, size_t count = 0) const;  // not allowed [ const var ]
+	var& fill(const str &X, size_t index = 0, size_t count = 0) const;  // not allowed [ const var ]
+	var& fill(__iniL<var> X, size_t index = 0, size_t count = 0) const;  // not allowed [ const var ]
+			
+	var& initArr() const;  // not allowed [ const var ]
 	var& sjoin(char sep = 0) const;  // not allowed [ const var ]
 	var& ssplit(char sep) const;  // not allowed [ const var ]
 	var& ltrim() const;  // not allowed [ const var ]
@@ -354,15 +389,12 @@ private:
 	var& append(cch *src, size_t src_index = 0, size_t src_count = 0) const; // not allowed [ const var ]
 	var& append(str &src, size_t src_index = 0, size_t src_count = 0) const; // not allowed [ const var ]
 	var& append(const var &src_first, const var &src_last) const; // not allowed [ const var ] 
-	
-	var& replace(size_t index, size_t count, const var &src, size_t src_index = 0,
-			size_t src_count = 0) const; // not allowed [ const var ] 
-	var& replace(size_t index, size_t count, cch *src, size_t src_index = 0, size_t src_count =
-			0) const; // not allowed [ const var ] 
-	var& replace(size_t index, size_t count, str &src, size_t src_index = 0, size_t src_count =
-			0) const; // not allowed [ const var ] 
+			
+	var& replace(size_t index, size_t count, const var &src, size_t src_index = 0, size_t src_count = 0) const; // not allowed [ const var ] 
+	var& replace(size_t index, size_t count, cch *src, size_t src_index = 0, size_t src_count = 0) const; // not allowed [ const var ] 
+	var& replace(size_t index, size_t count, str &src, size_t src_index = 0, size_t src_count = 0) const; // not allowed [ const var ] 
 	var& replace(size_t index, size_t count, const var &src_first, const var &src_last) const; // not allowed [ const var ] 
-	
+			
 	var substr(size_t index, size_t count = 0) const; // not allowed [ const var ] 
 			
 public:
@@ -380,12 +412,12 @@ public:
 	var(cch*);
 	var(char*);
 	var(char);
-	var(__iniL<var> vv);
+	var(__iniL<var> x);
 	var(var &x);
 	var(const var &x);
 	var(var &&x);
 	virtual ~var();
-	
+
 	var& operator=(const var &rv);
 	var& operator=(var &rv);
 	var& operator=(var &&rv);
@@ -400,7 +432,7 @@ public:
 	var& operator=(cch *rv);
 	var& operator=(const str &rv);
 	var& operator=(const __iniL <var> &rv);
-	
+
 	template<typename t> friend var operator +(const t &lv, const var &rv);
 	virtual var operator+(const var &rv) const;
 	virtual var operator+(int rv) const;
@@ -413,7 +445,7 @@ public:
 	virtual var operator+(str &rv) const;
 	virtual var operator+(str *rv) const;
 	virtual var operator+(char rv) const;
-	
+
 	template<typename t> friend var operator-(const t &lv, const var &rv);
 	virtual var operator-(const var &rv) const;
 	virtual var operator-(int rv) const;
@@ -422,7 +454,7 @@ public:
 	virtual var operator-(long rv) const;
 	virtual var operator-(llong rv) const;
 	virtual var operator-(ullong rv) const;
-	
+
 	template<typename t> friend var operator*(const t &lv, const var &rv);
 	virtual var operator*(const var &rv) const;
 	virtual var operator*(int rv) const;
@@ -431,7 +463,7 @@ public:
 	virtual var operator*(long rv) const;
 	virtual var operator*(llong rv) const;
 	virtual var operator*(ullong rv) const;
-	
+
 	template<typename t> friend var operator/(const t &lv, const var &rv);
 	virtual var operator/(const var &rv) const;
 	virtual var operator/(int rv) const;
@@ -440,7 +472,7 @@ public:
 	virtual var operator/(long rv) const;
 	virtual var operator/(llong rv) const;
 	virtual var operator/(ullong rv) const;
-	
+
 	template<typename t> friend t& operator+=(t &lv, const var &rv);
 	template<typename t> friend t& operator+=(const t &lv, const var &rv);
 	virtual var& operator+=(const var &rv);
@@ -454,7 +486,7 @@ public:
 	virtual var& operator+=(str *rv);
 	virtual var& operator+=(cch *rv);
 	virtual var& operator+=(char rv);
-	
+
 	template<typename t> friend t& operator-=(t &lv, const var &rv);
 	template<typename t> friend t& operator-=(const t &lv, const var &rv);
 	virtual var& operator-=(const var &rv);
@@ -464,7 +496,7 @@ public:
 	virtual var& operator-=(long rv);
 	virtual var& operator-=(llong rv);
 	virtual var& operator-=(ullong rv);
-	
+
 	template<typename t> friend t& operator*=(t &lv, const var &rv);
 	template<typename t> friend t& operator*=(const t &lv, const var &rv);
 	virtual var& operator*=(const var &rv);
@@ -474,7 +506,7 @@ public:
 	virtual var& operator*=(long rv);
 	virtual var& operator*=(llong rv);
 	virtual var& operator*=(ullong rv);
-	
+
 	template<typename t> friend t& operator/=(t &lv, const var &rv);
 	template<typename t> friend t& operator/=(const t &lv, const var &rv);
 	virtual var& operator/=(const var &rv);
@@ -484,25 +516,25 @@ public:
 	virtual var& operator/=(long rv);
 	virtual var& operator/=(llong rv);
 	virtual var& operator/=(ullong rv);
-	
+
 	virtual var& operator[](size_t index);
 	const virtual var& operator[](size_t index) const;
-	
+
 	virtual var operator++(int rv);
 	const virtual var operator++(int rv) const;
-	
+
 	virtual var& operator++();
 	const virtual var& operator++() const;
-	
+
 	virtual var operator--(int rv);
 	const virtual var operator--(int rv) const;
-	
+
 	virtual var& operator--();
 	const virtual var& operator--() const;
-	
+
 	friend std::ostream& operator<<(std::ostream &os, const var &rv);
 	friend std::istream& operator>>(std::istream &is, const var &rv);
-	
+
 	template<typename t> friend bool operator>(const t &lv, const var &rv);
 	virtual bool operator>(const var &rv) const;
 	virtual bool operator>(int rv) const;
@@ -515,7 +547,7 @@ public:
 	virtual bool operator>(str &rv) const;
 	virtual bool operator>(str *rv) const;
 	virtual bool operator>(char rv) const;
-	
+
 	template<typename t> friend bool operator<(const t &lv, const var &rv);
 	virtual bool operator<(const var &rv) const;
 	virtual bool operator<(int rv) const;
@@ -528,7 +560,7 @@ public:
 	virtual bool operator<(str &rv) const;
 	virtual bool operator<(str *rv) const;
 	virtual bool operator<(char rv) const;
-	
+
 	template<typename t> friend bool operator >=(const t &lv, const var &rv);
 	virtual bool operator>=(const var &rv) const;
 	virtual bool operator>=(int rv) const;
@@ -541,7 +573,7 @@ public:
 	virtual bool operator>=(str &rv) const;
 	virtual bool operator>=(str *rv) const;
 	virtual bool operator>=(char rv) const;
-	
+
 	template<typename t> friend bool operator<=(const t &lv, const var &rv);
 	virtual bool operator<=(const var &rv) const;
 	virtual bool operator<=(int rv) const;
@@ -554,9 +586,9 @@ public:
 	virtual bool operator<=(str &rv) const;
 	virtual bool operator<=(str *rv) const;
 	virtual bool operator<=(char rv) const;
-	
+
 	virtual bool operator!() const;
-	
+
 	template<typename t> friend bool operator==(const t &lv, const var &rv);
 	virtual bool operator==(const var &rv) const;
 	virtual bool operator==(int rv) const;
@@ -569,7 +601,7 @@ public:
 	virtual bool operator==(str &rv) const;
 	virtual bool operator==(str *rv) const;
 	virtual bool operator==(char rv) const;
-	
+
 	template<typename t> friend bool operator!=(const t &lv, const var &rv);
 	virtual bool operator!=(const var &rv) const;
 	virtual bool operator!=(int rv) const;
@@ -582,10 +614,10 @@ public:
 	virtual bool operator!=(str &rv) const;
 	virtual bool operator!=(str *rv) const;
 	virtual bool operator!=(char rv) const;
-	
+
 	virtual var& operator*();
 	const virtual var& operator*() const;
-	
+
 	virtual operator bool() const noexcept;
 	virtual operator bool() noexcept;
 	virtual operator int() const;
@@ -1485,7 +1517,7 @@ public:
 	 *  itr = s.insert(1, sins.begin(), sins.end()); // "sABCtring" 
 	 *  
 	 *  note: rbegin()/rend() will work too (revers)
-	 *  
+	 *   
 	 */
 	virtual var insert(size_t index, const var &src_fist, const var &src_last);
 
@@ -2248,8 +2280,232 @@ public:
 	 */
 	virtual var push_back( __iniL<var> X);
 
-	// virtual var push_front(SUPT X) [waits for implementation]
-	
+	/** ->  var:itr push_front(const var &X) [var:str/var:arr]  <- 
+	 *
+	 * - appends the given element 'X' to the begin
+	 * - iterators may be invalidated
+	 *  
+	 * param X -> value to push
+	 *            for: var:arr -> var:X 
+	 *                 var:str -> var:X  
+	 *             
+	 * return  -> var:itr (set to begin)
+	 *  
+	 * exceptions: catch(VarExcp &ex) 
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var s = "123456", a = { 'B', 'C', 'D' }, itr;
+	 *	itr = s.push_front("id=");   // "id=123456"
+	 *	itr = a.push_front('A');     // "{'A','B','C','D'}"
+	 *  
+	 */
+	virtual var push_front(const var &X);
+
+	/** ->  var:itr push_front(int X) [var:str/var:arr]  <- 
+	 *
+	 * - appends the given element 'X' to the begin
+	 * - iterators may be invalidated
+	 *  
+	 * param X -> value to push
+	 * return  -> var:itr (set to begin)
+	 *  
+	 * exceptions: catch(VarExcp &ex) 
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ]       
+	 * ex:
+	 *  var s = "456", a = { 1, 2, 3 }, itr;
+	 *	itr = s.push_front(123);   // "123456"
+	 *	itr = a.push_front(0);     // "{0,1,2,3}"
+	 *  
+	 */
+	virtual var push_front(int X);
+
+	/** ->  var:itr push_front(float X) [var:str/var:arr]  <- 
+	 *
+	 * - appends the given element 'X' to the begin
+	 * - iterators may be invalidated
+	 *  
+	 * param X -> value to push
+	 * return  -> var:itr (set to begin)
+	 *  
+	 * exceptions: catch(VarExcp &ex) 
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ]       
+	 * ex:
+	 *	var s = "$", a = { "$" }, itr;
+	 *  itr = s.push_front((float) 1.5);   // "1.5$"
+	 *  itr = a.push_front((float) 2.5);
+	 *  a.sjoin();                         // "2.500000$"
+	 *  
+	 */
+	virtual var push_front(float X);
+
+	/** ->  var:itr push_front(double X) [var:str/var:arr]  <- 
+	 *
+	 * - appends the given element 'X' to the begin
+	 * - iterators may be invalidated
+	 *  
+	 * param X -> value to push
+	 * return  -> var:itr (set to begin)
+	 *  
+	 * exceptions: catch(VarExcp &ex) 
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ]       
+	 * ex:
+	 *  var s = "$", a = { "$" }, itr;
+	 *  itr = s.push_front(1.5);   // "1.5$"
+	 *  itr = a.push_front(2.5);
+	 *  a.sjoin();                 // "2.500000$"
+	 * 
+	 */
+	virtual var push_front(double X);
+
+	/** ->  var:itr push_front(long X) [var:str/var:arr]  <- 
+	 *
+	 * - appends the given element 'X' to the begin
+	 * - iterators may be invalidated
+	 *  
+	 * param X -> value to push
+	 * return  -> var:itr (set to begin)
+	 *  
+	 * exceptions: catch(VarExcp &ex) 
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ]       
+	 * ex:
+	 *  var s = "456", a = { 1, 2, 3 }, itr;
+	 *	itr = s.push_front( (long) 123);   // "123456"
+	 *	itr = a.push_front( (long) 0);     // "{0,1,2,3}"
+	 *  
+	 */
+	virtual var push_front(long X);
+
+	/** ->  var:itr push_front(llong X) [var:str/var:arr]  <- 
+	 *
+	 * - appends the given element 'X' to the begin
+	 * - iterators may be invalidated
+	 *  
+	 * param X -> value to push
+	 * return  -> var:itr (set to begin)
+	 *  
+	 * exceptions: catch(VarExcp &ex) 
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ]       
+	 * ex: 
+	 *  var s = "456", a = { 1, 2, 3 }, itr;
+	 *	itr = s.push_front( (llong) 123);   // "123456"
+	 *	itr = a.push_front( (llong) 0);     // "{0,1,2,3}"
+	 *  
+	 */
+	virtual var push_front(llong X);
+
+	/** ->  var:itr push_front(ullong X) [var:str/var:arr]  <- 
+	 *
+	 * - appends the given element 'X' to the begin
+	 * - iterators may be invalidated
+	 *  
+	 * param X -> value to push
+	 * return  -> var:itr (set to begin)
+	 *  
+	 * exceptions: catch(VarExcp &ex) 
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ]       
+	 * ex:
+	 *  var s = "456", a = { 1, 2, 3 }, itr;
+	 *	itr = s.push_front( (llong) 123);   // "123456"
+	 *	itr = a.push_front( (llong) 0);     // "{0,1,2,3}"
+	 *  
+	 */
+	virtual var push_front(ullong X);
+
+	/** ->  var:itr push_front(char X) [var:str/var:arr]  <- 
+	 *
+	 * - appends the given element 'X' to the begin
+	 * - iterators may be invalidated
+	 *  
+	 * param X -> value to push
+	 * return  -> var:itr (set to begin)
+	 *  
+	 * exceptions: catch(VarExcp &ex) 
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ]       
+	 * ex:
+	 *  var s = "tring", a = { 'B', 'C', 'D' }, itr;
+	 *	itr = s.push_front('S');   // "String"
+	 *	itr = a.push_front('A');   // "{'A','B','C','D'}"
+	 *  
+	 */
+	virtual var push_front(char X);
+
+	/** ->  var:itr push_front(cch* X) [var:str/var:arr]  <- 
+	 *
+	 * - appends the given element 'X' to the begin
+	 * - iterators may be invalidated
+	 *  
+	 * param X -> value to push
+	 * return  -> var:itr (set to begin)
+	 *  
+	 * exceptions: catch(VarExcp &ex) 
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ]       
+	 * ex:
+	 *  var s = "ing", a = {  "CD" }, itr;
+	 *	itr = s.push_front("STR");   // "STRing"
+	 *	itr = a.push_front("AB");    // "{'AB','CD'}"
+	 *  
+	 */
+	virtual var push_front(cch *X);
+
+	/** ->  var:itr push_front(const str &x) [var:str/var:arr]  <- 
+	 *
+	 * - appends the given element 'X' to the begin
+	 * - iterators may be invalidated
+	 *  
+	 * param X -> value to push
+	 * return  -> var:itr (set to begin)
+	 *  
+	 * exceptions: catch(VarExcp &ex) 
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ]       
+	 * ex:
+	 *  std::string S = "Hello";
+	 *  var s = " World", a = { "World" }, itr;
+	 *	itr = s.push_front(S);   // "Hello World"
+	 *	itr = a.push_front(S);   // "{'Hello','World'}"
+	 *  
+	 */
+	virtual var push_front(const str &X);
+
+	/** ->  var:itr push_front(__iniL<var> X) [var:str/var:arr]  <- 
+	 *
+	 * - appends the given element 'X' to the begin
+	 * - iterators may be invalidated
+	 *  
+	 * param X -> value to push
+	 * return  -> var:itr (set to begin)
+	 *  
+	 * exceptions: catch(VarExcp &ex) 
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ]       
+	 * ex:
+	 * var s = "Z", a = { "Z" }, itr;
+	 * itr = s.push_front( { 'X', 'Y' });   // "XYZ"
+	 * itr = a.push_front( { 'X', 'Y' });   // "{{'X','Y'},"Z"}"
+	 *  
+	 */
+	virtual var push_front( __iniL<var> X);
+
 	/** ->  var:X pop_back() [var:str/var:arr]  <-
 	 *
 	 * - removes the last element of the container
@@ -2260,32 +2516,764 @@ public:
 	 * exceptions: catch(VarExcp &ex)
 	 *             > [ out_of_range ]
 	 *	           > [ unsupported_interface ]
-	 *             > [ use_of_undefined_var ] 
-	 *             
+	 *             > [ use_of_undefined_var ]      
 	 * ex:
-	 *  var a = { 1, { 1, 2 }, "str", 'c' }, s = "string", x;
-	 *  x = a.pop_back();   // 'c'
-	 *  x = a.pop_back();   // "str"
-	 *  x = s.pop_back();   // 'g'
+	 *  var s = "STR", a = { 1, 2, 3 };
+	 *	
+	 *	x = s.pop_back();   // R   "ST"
+	 *  x = s.pop_back();   // T   "S"
+	 *  x = s.pop_back();   // S   ""
+	 *	
+	 *  x = a.pop_back();   // 3   "{1,2}"
+	 *  x = a.pop_back();   // 2   "{1}"
+	 *  x = a.pop_back();   // 1   "{}"
 	 *  
 	 */
 	virtual var pop_back();
 
-	// virtual var pop_front() [waits for implementation]
+	/** ->  var:X pop_front() [var:str/var:arr]  <-
+	 *
+	 * - removes the first element of the container
+	 * - iterators may be invalidated
+	 * 
+	 * return -> var:X            
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var s = "STR", a = { 1, 2, 3 };
+	 *	
+	 *	x = s.pop_front();   // S   "TR"
+	 *  x = s.pop_front();   // T   "R"
+	 *  x = s.pop_front();   // R   ""
+	 *	
+	 *  x = a.pop_front();   // 1   "{2,3}"
+	 *  x = a.pop_front();   // 2   "{3}"
+	 *  x = a.pop_front();   // 3   "{}"
+	 *  
+	 */
+	virtual var pop_front();
+
+	/** ->  var:str/arr sort_cmp(bool (*cmp)(var:X/itr &a, var:X/itr &b),
+	 *                       bool reverse = false) [var:str/var:arr]  <-
+	 *                           
+	 * - sorts the elements using the function 'cmp' and returns the result
+	 * 
+	 * param cmp     -> comparison function
+	 * passed arguments: for: var:arr -> a,b are var:X    
+	 *                        var:str -> a,b are var:itr
+	 * param reverse -> reverses the order of the iterations
+	 * return        -> for: var:arr -> new sorted array              
+	 *                       var:str -> new sorted string
+	 *  
+	 * note: (internal behavior)
+	 *       if the 'cmp' function returns: true  -> swap(a,b) 
+	 *                                      false -> does nothing
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 6, 3, 7, 2, 9, 4, 1, 8, 0, 5 }, ra;
+	 *	ra = a.sort_cmp([](auto a, auto b) {
+	 *	    return b < a;           // ra = "{0,1,2,3,4,5,6,7,8,9}"  
+	 *  });                         // ra = "{9,8,7,6,5,4,3,2,1,0}" (reverse=true)   
+	 *  
+	 *  var s = "FBEDCA", rs;
+	 *  rs = s.sort_cmp([](auto a, auto b) {
+	 *      return *b < *a;          // rs = "ABCDEF"
+	 *  });                          // rs = "FEDCBA" (reverse=true)
+	 * 
+	 *  
+	 */
+	virtual var sort_cmp(bool (*cmp)(var &a, var &b), bool reverse = false) const;
+
+	/** ->  var:self& s(elf)sort_cmp(bool (*cmp)(var:X/itr &a, var:X/itr &b),
+	 *                               bool reverse = false) [var:str/var:arr]  <-
+	 *                           
+	 * - sorts the own elements using the function 'cmp'
+	 * 
+	 * param cmp    -> comparison function
+	 * passed arguments: for: var:arr -> a,b are var:X    
+	 *                        var:str -> a,b are var:itr
+	 * param reverse -> reverses the order of the iterations
+	 * return        -> var:self&
+	 *  
+	 * note: (internal behavior)
+	 *       if the 'cmp' function returns: true  -> swap(a,b) 
+	 *                                      false -> does nothing
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 6, 3, 7, 2, 9, 4, 1, 8, 0, 5 };
+	 *	a.ssort_cmp([](auto a, auto b) {
+	 *	    return b < a;           // a = "{0,1,2,3,4,5,6,7,8,9}"  
+	 *  });                         // a = "{9,8,7,6,5,4,3,2,1,0}" (reverse=true)   
+	 *  
+	 *  var s = "FBEDCA";
+	 *  s.ssort_cmp([](auto a, auto b) {
+	 *      return *b < *a;          // s = "ABCDEF"
+	 *  });                          // s = "FEDCBA" (reverse=true)
+	 * 
+	 *  
+	 */
+	virtual var& ssort_cmp(bool (*cmp)(var &a, var &b), bool reverse = false);
+
+	/** ->  var:str/arr sort(bool reverse = false) [var:str/var:arr]  <-
+	 *                           
+	 * - sorts the elements and returns the result (default sorting)
+	 * 
+	 * param reverse -> reverses the order of the iterations
+	 * return        -> for: var:arr -> new sorted array              
+	 *                       var:str -> new sorted string
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var s = "str", sb = s.begin(), srb = s.rbegin(), udf;
+	 *  var a = { 1 }, ab = a.begin(), arb = a.rbegin();
+	 *  
+	 *  var A = { a, sb, "AB", ab, 2.5, "ABC", false, srb, 
+	 *          { 1, 2 }, 'A', udf, 1, arb, 'B', true };
+	 *  
+	 *  var ra = A.sort();   // ra = "[ 14 ]{ false,                     booleans
+	 *                       //               true,                         |
+	 *                       //               1,                         numbers 
+	 *                       //               2.500000,                     |
+	 *                       //               'A',                        chars
+	 *                       //               'B',                          |
+	 *                       //               "AB",                      strings
+	 *                       //               "ABC",                        |
+	 *                       //               [ 1 ]{ 1 },                 arrays
+	 *                       //               [ 2 ]{ 1,                     |
+	 *                       //                      2 },                   |
+	 *                       //               | [var:I_str] val: s |,    iterators
+	 *                       //               | [var:Ir_str] val: r |,      |
+	 *                       //               | [var:I_arr] val: 1 |,       |
+	 *                       //               | [var:Ir_arr] val: 1 |,      |                 
+	 *                       //               |udf| }"                   undefined                  
+	 *
+	 *  var S = "cB3bC2A1a";
+	 *  var rs = S.sort();    // rs = "123ABCabc"
+	 *  
+	 */
+	virtual var sort(bool reverse = false) const;
+
+	/** ->  var:self& s(elf)sort(bool reverse = false) [var:str/var:arr]  <-
+	 *                           
+	 * - sorts the own elements (default sorting)
+	 * 
+	 * param reverse -> reverses the order of the iterations
+	 * return        -> var:self&
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var s = "str", sb = s.begin(), srb = s.rbegin(), udf;
+	 *  var a = { 1 }, ab = a.begin(), arb = a.rbegin();
+	 * 
+	 *  var A = { a, sb, "AB", ab, 2.5, "ABC", false, srb, 
+	 *          { 1, 2 }, 'A', udf,  1, arb, 'B', true };
+	 * 
+	 *  A.ssort();   // A = "[ 14 ]{ false,                     booleans
+	 *               //              true,                         |
+	 *               //              1,                         numbers 
+	 *               //              2.500000,                     |
+	 *               //              'A',                        chars
+	 *               //              'B',                          |
+	 *               //              "AB",                      strings
+	 *               //              "ABC",                        |
+	 *               //              [ 1 ]{ 1 },                 arrays
+	 *               //              [ 2 ]{ 1,                     |
+	 *               //                     2 },                   |
+	 *               //              | [var:I_str] val: s |,    iterators
+	 *               //              | [var:Ir_str] val: r |,      |
+	 *               //              | [var:I_arr] val: 1 |,       |
+	 *               //              | [var:Ir_arr] val: 1 |,      |                 
+	 *               //              |udf| }"                   undefined  
+	 *               
+	 *  var S = "cB3bC2A1a";
+	 *  S.ssort();   // S = "123ABCabc"
+	 *  
+	 */
+	virtual var& ssort(bool reverse = false);
+
+	/** ->  var:str/arr sample(size_t num = 0) [var:str/var:arr]  <-
+	 *                           
+	 * - selects 'num' elements from the underlying sequence
+	 * 
+	 * param num  -> number of samples to make  
+	 *               0 (def) -> will be taken length of the sequence
+	 * return     -> for: var:arr -> new array sample              
+	 *                    var:str -> new string sample
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, x;
+	 *  x = a.sample(5);   // x = "{7,8,2,7,6}"
+	 *  x = a.sample();    // x = "{8,6,5,7,5,1,7,4,6}"
+	 *  
+	 *  var s = "ABCDEFGHIJKLMNOPQ"; 
+	 *  x = s.sample(10);  // x = "LMIEOLPAMN"
+	 *  x = s.sample();    // x = "CCDQOMNLKHECMFJLN"
+	 *  
+	 */
+	virtual var sample(size_t num = 0) const;
+
+	/** ->  var:str/arr sample_unq(size_t num = 0) [var:str/var:arr]  <-
+	 *                           
+	 * - selects "num" unique elements from the underlying sequence
+	 *   
+	 * note: sample uniqued by the positions(indexes), not by the values(repeated)
+	 * 
+	 * param num  -> number of samples to make  
+	 *               0 (def) -> will be taken length of the sequence
+	 * return     -> for: var:arr -> new array  sample              
+	 *                    var:str -> new string sample
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, x;
+	 *  x = a.sample_unq(5);   // x = "{5,2,6,3,9}"
+	 *  x = a.sample_unq();    // x = "{2,6,3,4,1,5,7,9,8}"
+	 *		
+	 *  var s = "ABCDEFGHIJKLMNOPQ";
+	 *  x = s.sample_unq(10);  // x = "NGCDBKJLHM"
+	 *  x = s.sample_unq();    // x = "JMCQBAKNGILEOFHPD"
+	 *  
+	 */
+	virtual var sample_unq(size_t num = 0) const;
+
+	/** ->  var:str/arr reverse() [var:str/var:arr]  <-
+	 *                           
+	 * - reverses the order of the elements 
+	 * 
+	 * return  -> for: var:arr -> new reverse array              
+	 *                 var:str -> new reverse string
+	 *  
+	 * exceptions: catch(VarExcp &ex)  
+	 *             > [ out_of_range ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 }, x;
+	 *  x = a.reverse();   // x = "{0,9,8,7,6,5,4,3,2,1}"
+	 *
+	 *  var s = "ABCDEFGHIJKLMNOPQ";
+	 *  x = s.reverse();   // x = "QPONMLKJIHGFEDCBA"
+	 *  
+	 */
+	virtual var reverse();
+
+	/** ->  var:self& reverse() [var:str/var:arr]  <-
+	 *                           
+	 * - reverses the order of the elements 
+	 * 
+	 * return  -> var:self&
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+	 *  a.sreverse();   // a = "{0,9,8,7,6,5,4,3,2,1}"
+	 *
+	 *  var s = "ABCDEFGHIJKLMNOPQ";
+	 *  s.sreverse();   // s = "QPONMLKJIHGFEDCBA"
+	 *  
+	 */
+	virtual var& sreverse();
+
+	/** ->  bool equal(const var:itr &src_first, const var:itr &src_last, 
+	 *                       size_t index = 0, size_t count = 0)  [var:str/var:arr]  <-
+	 *                           
+	 * - returns true if the range [src_first, src_last) is equal to the range 
+	 *   [index, index + count), and false otherwise
+	 * 
+	 * param src_first -> start-iterator of a source                    (inclusive)
+	 * param src_last  -> end-iterator of a source                      (not inclusive)
+	 * param index     -> start index     (0 -> from [0])               (inclusive)
+	 * param count     -> number of elements after index: 'index+count' (not inclusive)
+	 *                                    (0 -> to end)
+	 * return  -> if they are equal (by type and value) return true,
+	 *            otherwise false
+	 *  
+	 * note: iterators are equal if they have same type and pointed to the
+	 *       same element(more precisely -> the same address) 
+	 * note: when comparing arrays, recursion is used
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *             > [ bad_iterator ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  bool res = false;
+	 *  // arr:
+	 *  //         <--------------------
+	 *  //         -------------------->
+	 *  var a = { 'r', 'a', 'd', 'a', 'r' };
+	 *  res = a.equal(a.rbegin(), a.rend(), 0); // true: "radar" is a palindrome
+	 *			
+	 *  var a1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, a2 = { 3, 4, 5, 6, 7 };
+	 *  //                 '''''''''                     '''''''''
+	 *  res = a1.equal(a2.begin() += 1, a2.end() -= 1, 3, 3); // true
+	 *	
+	 *  // different types example:
+	 *  var a3 = { 1, 2.2, udf, true, { { { 1 } } }, "str", 'c', a.begin() };
+	 *  var a4 = { 1, 2.2, udf, true, { { { 1 } } }, "str", 'c', a.begin() };
+	 *	
+	 *  res = a3.equal(a4.begin(), a4.end());  // true
+	 *  
+	 *  // str: (same rules as for arrays)
+	 *  
+	 *  var s = "level";
+	 *  res = s.equal(s.rbegin(), s.rend()); // true: "level" is a palindrome
+	 *  
+	 *  ... and so on
+	 *  
+	 */
+	virtual bool equal(const var &src_first, const var &src_last, //
+			size_t index = 0, size_t count = 0) const;
+
+	/** ->  var:arr/bool mismatch(const var:itr &src_first, const var:itr &src_last, 
+	 *                           size_t index = 0, size_t count = 0)  [var:str/var:arr]  <-
+	 *   
+	 * - returns pair of 'top-level iterators' of the first mismatching pair of elements 
+	 *   from two ranges: one defined by [src_first, src_last) and another 
+	 *   defined by [index, index + count) 
+	 * - if [var:arr]-case contains nested arrays, then it will be additionally returned
+	 *   pair of 'inner-level iterators' of the first mismatching pair of elements  
+	 * 
+	 * param src_first -> start-iterator of a source                    (inclusive)
+	 * param src_last  -> end-iterator of a source                      (not inclusive)
+	 * param index     -> start index     (0 -> from [0])               (inclusive)
+	 * param count     -> number of elements after index: 'index+count' (not inclusive)
+	 *                                    (0 -> to end)
+	 * return  -> var:arr = { itr_top ,   or   { itr_top ,   or   var:bool:false 
+	 *                        src_itr_top,       src_itr_top,     (no mismatch)
+	 *                        |udf|,             itr_inn,
+	 *                        |udf| }            src_itr_inn }
+	 *              (only top level mismatch)    +(inner level mismatch)    
+	 *                   
+	 * note: iterators are equal if they have same type and pointed to the
+	 *       same element(more precisely -> the same address) 
+	 * note: when comparing arrays, recursion is used
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *             > [ bad_iterator ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var x;
+	 *  var a1 = { 1, 2, 3, 4 };      
+	 *  var a2 = { 1, 2, 3, 4 };            
+	 *                                       
+	 *  x = a1.mismatch(a2.begin(), a2.end()); //  false
+	 *  
+	 *  a1 = { 1, 2, 3, 4 };                   // x = [ 4 ]{ | [var:I_arr] val: 4 |,
+	 *  a2 = { 1, 2, 3, 5 };                   //            | [var:I_arr] val: 5 |,
+	 *                                         //            |udf|,
+	 *  x = a1.mismatch(a2.begin(), a2.end()); //            |udf| }
+	 *  
+	 *  a1 = { 1, 2, { 1, 2, 3 }, 3 };         // x = [ 4 ]{ | [var:I_arr] val: {1,2,3} |,
+	 *  a2 = { 1, 2, { 1, 2, 4 }, 3 };         //            | [var:I_arr] val: {1,2,4} |,
+	 *                                         //            | [var:I_arr] val: 3 |,
+	 *  x = a1.mismatch(a2.begin(), a2.end()); //            | [var:I_arr] val: 4 | }
+	 *  
+	 *  a1 = { 1, 2, { 1, 2, 3 }, 3 };         // x = [ 4 ]{ | [var:I_arr] val: {1,2,3} |,
+	 *  a2 = { 1, 2, { 1, 2 }, 3 };            //            | [var:I_arr] val: {1,2} |,
+	 *                                         //            | [var:I_arr] val: 3 |,
+	 *  x = a1.mismatch(a2.begin(), a2.end()); //            | [var:I_arr] at the end() | }
+	 *  
+	 *  a1 = { 1, { 1, { 1, { 2, 3, { { { { 5 } } } } } } }, 2 }; 
+	 *	a2 = { 1, { 1, { 1, { 2, 3, { { { { 4 } } } } } } }, 2 };
+	 *                 
+	 *  x = a1.mismatch(a2.begin(), a2.end());             
+	 *                 
+	 *  // x =  [ 4 ]{ | [var:I_arr] val: {1,{1,{2,3,{{{{5}}}}}}} |,
+	 *  //             | [var:I_arr] val: {1,{1,{2,3,{{{{4}}}}}}} |,
+	 *  //             | [var:I_arr] val: 5 |,
+	 *  //             | [var:I_arr] val: 4 | }
+	 *  
+	 *  // ... 
+	 *  
+	 *  var s1 = "string";
+	 *  var s2 = "string";
+	 *  
+	 *  x = s1.mismatch(s2.begin(), s2.end()); //  false
+	 *  
+	 *  s2 = "strIng";                         //  x = [ 4 ]{ | [var:I_str] val: 'i' |,
+	 *	                                       //             | [var:I_str] val: 'I' |,
+	 *	x = s1.mismatch(s2.begin(), s2.end()); //             |udf|,
+	 *                                         //             |udf| }
+	 *                                          
+	 *  ----------------------------------------------------------------------------
+	 *  
+	 *  // note: (arrays follow the same rules)
+	 *  //      - such an 'incomprehensible' output means comparing unequal internal  
+	 *  //          \.....     ranges (relative to the ends)  
+	 *  //                |
+	 *  //        ---->   '-->   x = [ 4 ]{ | [var:I_str] val: 'g' |,                      
+	 *  // s1 = "string"                    | [var:I_str] val: 'g' |,
+	 *  // s2 = "string"                    |udf|,
+	 *  //        --->                      |udf| }
+	 *  //
+	 *  x = s1.mismatch(s2.begin() += 1, s2.end() -= 1, 1, s1.length() - 1);
+	 *  
+	 *  -----------------------------------------------------------------------------
+	 *  
+	 */
+	virtual var mismatch(const var &src_first, const var &src_last, //
+			size_t index = 0, size_t count = 0) const;
+
+	/** ->  var:self& fill(const var:X &X, size_t index = 0, 
+	 *                                     size_t count = 0)  [var:str/var:arr]  <-
+	 *                           
+	 * - assigns the given 'X' value to the elements in the range [index, index + count)
+	 * - iterators may be invalidated
+	 * 
+	 * param X -> value to assigns for: var:arr -> var:X              
+	 *                                  var:str -> var:char or char  (only)
+	 * param index  -> start index      (0 -> from [0])              (inclusive)
+	 * param count  -> number of elements after index: 'index+count' (not inclusive)
+	 *                                  (0 -> to end)                                
+	 * note: if (index+count > var:arr/str.length) then var:arr/str will be increased
+	 * 
+	 * return  -> var:self&
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var c = '!';
+	 *  var a = { 1, 1, 1, 1, 1, 1, };
+	 *  a.fill(c, 1, 2);   // "{1,'!','!',1,1,1}"
+	 *  a.fill(c, 6, 2);   // "{1,'!','!',1,1,1,'!','!'}"
+	 *  
+	 *  var s = "......";
+	 *  s.fill(c, 1, 2), s.prnt();  // ".!!..."
+	 *  s.fill(c, 6, 2), s.prnt();  // ".!!...!!"
+	 *  
+	 */
+	virtual var& fill(const var &X, size_t index = 0, size_t count = 0);
+
+	/** ->  var:self& fill(int X, size_t index = 0, size_t count = 0)  [var:arr]  <-
+	 *                           
+	 * - assigns the given 'X' value to the elements in the range [index, index + count)
+	 * - iterators may be invalidated
+	 * 
+	 * param X      -> value to assigns 
+	 * param index  -> start index      (0 -> from [0])              (inclusive)
+	 * param count  -> number of elements after index: 'index+count' (not inclusive)
+	 *                                  (0 -> to end)                                
+	 * note: if (index+count > var:arr.length) then var:arr will be increased
+	 * 
+	 * return  -> var:self&
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 1, 1, 1, 1, 1, 1, };
+	 *  a.fill(2, 1, 2);   // "{1,2,2,1,1,1}"
+	 *  a.fill(3, 6, 2);   // "{1,2,2,1,1,1,3,3}"
+	 *  
+	 */
+	virtual var& fill(int X, size_t index = 0, size_t count = 0);
+
+	/** ->  var:self& fill(float X, size_t index = 0, size_t count = 0)  [var:arr]  <-
+	 *                           
+	 * - assigns the given 'X' value to the elements in the range [index, index + count)
+	 * - iterators may be invalidated
+	 * 
+	 * param X      -> value to assigns 
+	 * param index  -> start index      (0 -> from [0])              (inclusive)
+	 * param count  -> number of elements after index: 'index+count' (not inclusive)
+	 *                                  (0 -> to end)                                
+	 * note: if (index+count > var:arr.length) then var:arr will be increased
+	 * 
+	 * return  -> var:self&
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 1, 1, 1, 1, 1, 1, };
+	 *  a.fill( (float) 2.5, 1, 2);   // "{1,2.500000,2.500000,1,1,1}"
+	 *  a.fill( (float) 3.5, 6, 2);   // "{1,2.500000,2.500000,1,1,1,3.500000,3.500000}"
+	 *  
+	 */
+	virtual var& fill(float X, size_t index = 0, size_t count = 0);
+
+	/** ->  var:self& fill(double X, size_t index = 0, size_t count = 0)  [var:arr]  <-
+	 *                           
+	 * - assigns the given 'X' value to the elements in the range [index, index + count)
+	 * - iterators may be invalidated
+	 * 
+	 * param X      -> value to assigns 
+	 * param index  -> start index      (0 -> from [0])              (inclusive)
+	 * param count  -> number of elements after index: 'index+count' (not inclusive)
+	 *                                  (0 -> to end)                                
+	 * note: if (index+count > var:arr.length) then var:arr will be increased
+	 * 
+	 * return  -> var:self&
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 1, 1, 1, 1, 1, 1, };
+	 *  a.fill(2.5, 1, 2);   // "{1,2.500000,2.500000,1,1,1}"
+	 *  a.fill(3.5, 6, 2);   // "{1,2.500000,2.500000,1,1,1,3.500000,3.500000}"
+	 *  
+	 */
+	virtual var& fill(double X, size_t index = 0, size_t count = 0);
+
+	/** ->  var:self& fill(long X, size_t index = 0, size_t count = 0)  [var:arr]  <-
+	 *                           
+	 * - assigns the given 'X' value to the elements in the range [index, index + count)
+	 * - iterators may be invalidated
+	 * 
+	 * param X      -> value to assigns 
+	 * param index  -> start index      (0 -> from [0])              (inclusive)
+	 * param count  -> number of elements after index: 'index+count' (not inclusive)
+	 *                                  (0 -> to end)                                
+	 * note: if (index+count > var:arr.length) then var:arr will be increased
+	 * 
+	 * return  -> var:self&
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 1, 1, 1, 1, 1, 1, };
+	 *  a.fill( (long) 2, 1, 2);   // "{1,2,2,1,1,1}"
+	 *  a.fill( (long) 3, 6, 2);   // "{1,2,2,1,1,1,3,3}"
+	 *  
+	 */
+	virtual var& fill(long X, size_t index = 0, size_t count = 0);
+
+	/** ->  var:self& fill(llong X, size_t index = 0, size_t count = 0)  [var:arr]  <-
+	 *                           
+	 * - assigns the given 'X' value to the elements in the range [index, index + count)
+	 * - iterators may be invalidated
+	 * 
+	 * param X      -> value to assigns 
+	 * param index  -> start index      (0 -> from [0])              (inclusive)
+	 * param count  -> number of elements after index: 'index+count' (not inclusive)
+	 *                                  (0 -> to end)                                
+	 * note: if (index+count > var:arr.length) then var:arr will be increased
+	 * 
+	 * return  -> var:self&
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 1, 1, 1, 1, 1, 1, };
+	 *  a.fill( (llong) 2, 1, 2);   // "{1,2,2,1,1,1}"
+	 *  a.fill( (llong) 3, 6, 2);   // "{1,2,2,1,1,1,3,3}"
+	 *  
+	 */
+	virtual var& fill(llong X, size_t index = 0, size_t count = 0);
+
+	/** ->  var:self& fill(ullong X, size_t index = 0, size_t count = 0)  [var:arr]  <-
+	 *                           
+	 * - assigns the given 'X' value to the elements in the range [index, index + count)
+	 * - iterators may be invalidated
+	 * 
+	 * param X      -> value to assigns 
+	 * param index  -> start index      (0 -> from [0])              (inclusive)
+	 * param count  -> number of elements after index: 'index+count' (not inclusive)
+	 *                                  (0 -> to end)                                
+	 * note: if (index+count > var:arr.length) then var:arr will be increased
+	 * 
+	 * return  -> var:self&
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 1, 1, 1, 1, 1, 1, };
+	 *  a.fill( (ullong) 2, 1, 2);   // "{1,2,2,1,1,1}"
+	 *  a.fill( (ullong) 3, 6, 2);   // "{1,2,2,1,1,1,3,3}"
+	 *  
+	 */
+	virtual var& fill(ullong X, size_t index = 0, size_t count = 0);
+
+	/** ->  var:self& fill(char X, size_t index = 0, size_t count = 0)  [var:str/var:arr]  <-
+	 *                           
+	 * - assigns the given 'X' value to the elements in the range [index, index + count)
+	 * - iterators may be invalidated
+	 * 
+	 * param X      -> value to assigns 
+	 * param index  -> start index      (0 -> from [0])              (inclusive)
+	 * param count  -> number of elements after index: 'index+count' (not inclusive)
+	 *                                  (0 -> to end)                                
+	 * note: if (index+count > var:arr/str.length) then var:arr/str will be increased
+	 * 
+	 * return  -> var:self&
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 1, 1, 1, 1, 1, 1, };
+	 *  a.fill('!', 1, 2);   // "{1,'!','!',1,1,1}"
+	 *  a.fill('?', 6, 2);   // "{1,'!','!',1,1,1,'?','?'}"
+	 *  
+	 *  var s = "......";
+	 *  s.fill('!', 1, 2), s.prnt();   // ".!!..."
+	 *  s.fill('!', 6, 2), s.prnt();   // ".!!...??"
+	 *  
+	 */
+	virtual var& fill(char X, size_t index = 0, size_t count = 0);
+
+	/** ->  var:self& fill(cch* X, size_t index = 0, size_t count = 0)  [var:arr]  <-
+	 *                           
+	 * - assigns the given 'X' value to the elements in the range [index, index + count)
+	 * - iterators may be invalidated
+	 * 
+	 * param X      -> value to assign
+	 * param index  -> start index      (0 -> from [0])              (inclusive)
+	 * param count  -> number of elements after index: 'index+count' (not inclusive)
+	 *                                  (0 -> to end)                                
+	 * note: if (index+count > var:arr.length) then var:arr will be increased
+	 * 
+	 * return  -> var:self&
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 1, 1, 1, 1, 1, 1, };
+	 *  a.fill("!", 1, 2);   // "{1,"!","!",1,1,1}"
+	 *  a.fill("?", 6, 2);   // "{1,"!","!",1,1,1,"?","?"}"
+	 *  
+	 */
+	virtual var& fill(cch *X, size_t index = 0, size_t count = 0);
+
+	/** ->  var:self& fill(const str &X, size_t index = 0, size_t count = 0)  [var:arr]  <-
+	 *                           
+	 * - assigns the given 'X' value to the elements in the range [index, index + count)
+	 * - iterators may be invalidated
+	 * 
+	 * param X      -> value to assign 
+	 * param index  -> start index      (0 -> from [0])              (inclusive)
+	 * param count  -> number of elements after index: 'index+count' (not inclusive)
+	 *                                  (0 -> to end)                                
+	 * note: if (index+count > var:arr.length) then var:arr will be increased
+	 * 
+	 * return  -> var:self&
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ]   
+	 * ex:
+	 *  var a = { 1, 1, 1, 1, 1, 1, };
+	 *  std::string s = "!";
+	 *  a.fill(s, 1, 2);   // "{1,"!","!",1,1,1}"
+	 *  a.fill(s, 6, 2);   // "{1,"!","!",1,1,1,"!","!"}"
+	 *  
+	 */
+	virtual var& fill(const str &X, size_t index = 0, size_t count = 0);
+
+	/** ->  var:self& fill(__iniL<var> X, size_t index = 0, size_t count = 0)  [var:arr]  <-
+	 *                           
+	 * - assigns the given 'X' value to the elements in the range [index, index + count)
+	 * - iterators may be invalidated
+	 * 
+	 * param X      -> value to assigns 
+	 * param index  -> start index      (0 -> from [0])              (inclusive)
+	 * param count  -> number of elements after index: 'index+count' (not inclusive)
+	 *                                  (0 -> to end)                                
+	 * note: if (index+count > var:arr.length) then var:arr will be increased
+	 * 
+	 * return  -> var:self&
+	 *  
+	 * exceptions: catch(VarExcp &ex)
+	 *             > [ out_of_range ]
+	 *             > [ length_error ]
+	 *	           > [ unsupported_interface ]
+	 *             > [ use_of_undefined_var ] 
+	 * ex:
+	 *  var a = { 1, 1, 1, 1, 1, 1, };
+	 *  std::string s = "!";
+	 *  a.fill( { 1, 2 }, 1, 2);   // "{1,{1,2},{1,2},1,1,1}"
+	 *  a.fill( { 3, 4 }, 6, 2);   // "{1,{1,2},{1,2},1,1,1,{3,4},{3,4}}"
+	 *  
+	 */
+	virtual var& fill(__iniL<var> X, size_t index = 0, size_t count = 0);
+
+	//*************************************************** waiting for implementation
+	
+	//
+	
+	//virtual var copy(bool (*pred)(var &a)=0) const;
+
+	//virtual var copy(size_t index, size_t count, bool (*pred)(var &a)=0) const;
+
+	//virtual var copy_to(const var &dst_start, bool (*pred)(var &a)=0) const;
+
+	//virtual var copy_to(const var &dst_start, size_t index, size_t count, //
+	//		bool (*pred)(var &a)=0) const;
+
+	//
+	
+	//******************************************************************************
 	
 	//---------------------------- arr if: ---------------------------
 	
-	/** ->  void initArr() [var:arr]  <-
+	/** ->  var:self& initArr() [var:arr]  <-
 	 *
 	 * - because of 'var a = {}' won't work and sometimes it's needed 
 	 *   to have empty array -> this interface exists        
-	 *  
+	 * 
+	 * return -> var:self&
+	 * 
 	 * ex: 
 	 *  var array;
 	 *  array.initArr();  // "{ }" 
 	 *  
 	 */
-	virtual void initArr() noexcept;
+	virtual var& initArr() noexcept;
 
 	// Operations/Modifiers:
 	
@@ -2615,8 +3603,7 @@ public:
 	 *  s.replace(1, 4, ss, 2, 4); // "sRINGg"
 	 *             
 	 */
-	virtual var& replace(size_t index, size_t count, const var &src, size_t src_index = 0,
-			size_t src_count = 0);
+	virtual var& replace(size_t index, size_t count, const var &src, size_t src_index = 0, size_t src_count = 0);
 
 	/** -> var:self& replace(size_t index, size_t count, cch* src, size_t src_index = 0,
 	 *               	     size_t src_count = 0) [var:str]  <-
@@ -2644,8 +3631,7 @@ public:
 	 *  s.replace(1, 4, "STRING", 2, 4); // "sRINGg"
 	 *             
 	 */
-	virtual var& replace(size_t index, size_t count, cch *src, size_t src_index = 0,
-			size_t src_count = 0);
+	virtual var& replace(size_t index, size_t count, cch *src, size_t src_index = 0, size_t src_count = 0);
 
 	/** -> var:self& replace(size_t index, size_t count, str &src, size_t src_index = 0,
 	 *               	     size_t src_count = 0) [var:str]  <-
@@ -2674,8 +3660,7 @@ public:
 	 *  s.replace(1, 4, ss, 2, 4);  // "sRINGg"
 	 *             
 	 */
-	virtual var& replace(size_t index, size_t count, str &src, size_t src_index = 0,
-			size_t src_count = 0);
+	virtual var& replace(size_t index, size_t count, str &src, size_t src_index = 0, size_t src_count = 0);
 
 	/** ->  var:self& replace(size_t index, size_t count, const var:I(r)_str &src_first, 
 	 *                                      const var:I(r)_str &src_last) [var:str]  <-
@@ -2704,8 +3689,7 @@ public:
 	 *	s.replace(1, 3, b, e);  // "sGNIRTSng"
 	 *  
 	 */
-	virtual var& replace(size_t index, size_t count, const var &src_first,
-			const var &src_last);
+	virtual var& replace(size_t index, size_t count, const var &src_first, const var &src_last);
 
 	/** ->  int compare(const var:str &with) [var:str]  <-
 	 *
@@ -2840,8 +3824,7 @@ public:
 	 *	rs = s.compare(2, 3, "..XXB..", 2, 3);  // ..XXB.. = ..XXB..  (0)  
 	 *  
 	 */
-	virtual int compare(size_t index, size_t count, cch *with, size_t with_index = 0,
-			size_t with_count = 0) const;
+	virtual int compare(size_t index, size_t count, cch *with, size_t with_index = 0, size_t with_count = 0) const;
 
 	/** ->  int compare(size_t index, size_t count, str &with,
 	 *                                size_t with_index = 0, size_t with_count = 0) [var:str]  <-
@@ -2869,8 +3852,7 @@ public:
 	 *	rs = s.compare(2, 3, s3, 2, 3);  // ..XXB.. = ..XXB..  (0)  
 	 *  
 	 */
-	virtual int compare(size_t index, size_t count, str &with, size_t with_index = 0,
-			size_t with_count = 0) const;
+	virtual int compare(size_t index, size_t count, str &with, size_t with_index = 0, size_t with_count = 0) const;
 
 	/** ->  bool starts_with(const var:str/char &prefix) [var:str]  <-
 	 *
@@ -3036,8 +4018,7 @@ public:
 	 *  tot = s.copy(buf, 1, 3, 1); // buf: tri(0) <- zero set 
 	 *  
 	 */
-	virtual size_t copy(char *dest, size_t index = 0, size_t count = 0,
-			bool zero = false) const;
+	virtual size_t copy(char *dest, size_t index = 0, size_t count = 0, bool zero = false) const;
 
 	// Search: 
 	
@@ -3644,8 +4625,8 @@ public:
 	 *  
 	 */
 	virtual double _double() const;
-       
-         /** ->  var:s _str()  [var:X]  <-
+
+	/** ->  var:s _str()  [var:X]  <-
 	 *  
 	 * - convert current type to var:str (var:string)
 	 *  
@@ -3695,6 +4676,7 @@ private:
 	template<typename t> t* getPv(const var *pttyp) const;
 	var idx_solver(size_t index) const;
 	var* ret_bs();
+	virtual char* get_poi() const;
 };
 
 class VarExcp: public std::exception {
