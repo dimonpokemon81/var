@@ -98,14 +98,14 @@ var a = { { "arr" }, { 2 } }, udf;
 //    int(longlong)              
 //        |            string    iterator: I_str   another arrays                 bool
 //        |              |               |           |   / /    \                  |
-var A = { 1, 0.555, "..text..", 'c', s.begin(), udf, a, { { 3 }, { a.begin() } }, true };
-//             |                 |               |                     | 
-//           double             char          undefined            iterator: I_arr 
+var A = { 1, 0.555, "..text..", 'c', s.begin(), udf, a, { { 3 }, { a.begin() } }, true, var( { }) };
+//             |                 |               |                     |                      |
+//           double             char          undefined            iterator: I_arr        empty array
 //
 // note: all var:X are acceptable                 
 //                                            
 A._str().prnt(); // {1,0.555000,"..text..",'c',| [var:I_str] val: S |,|udf|,{ {"arr"},{2}},
-//                  { {3},{| [var:I_arr] val: {"arr"} |}},true}
+//                  { {3},{| [var:I_arr] val: {"arr"} |}},true,{}}
 // or
 A.prnt();        // [ 9 ]{ 1,
 //                         0.555000,
@@ -117,7 +117,8 @@ A.prnt();        // [ 9 ]{ 1,
 //                                [ 1 ]{ 2 } },
 //                         [ 2 ]{ [ 1 ]{ 3 },
 //                                [ 1 ]{ | [var:I_arr] val: {"arr"} | } },
-//                         true }
+//                         true,
+//                         { } }
 
 // ...
 ```
@@ -171,6 +172,171 @@ std::cout << ii << std::endl;	     //     456
 				
 // ...
 ```
+---
+>### Strings/Arrays
+
+```java
+
+var s = "str", sb = s.begin(), srb = s.rbegin(), udf;
+var a = { 1 }, ab = a.begin(), arb = a.rbegin();
+		
+var A = { a, sb, "AB", ab, 2.5, "ABC", false, var({ }), srb, { 1, 2 }, // 
+         'A', udf, 1, arb, 'B', true };
+		
+var ra = A.sort();   // ra = "[ 14 ]{ false,                     booleans
+		     //               true,                         |
+		     //               1,                         numbers 
+		     //               2.500000,                     |
+		     //               'A',                        chars
+		     //               'B',                          |
+		     //               "AB",                      strings
+		     //               "ABC",                        |
+		     //               { },                        arrays
+		     //               [ 1 ]{ 1 },                   |
+		     //               [ 2 ]{ 1,                     |
+	             //                      2 },                   |
+		     //               | [var:I_str] val: s |,    iterators
+		     //               | [var:Ir_str] val: r |,      |
+		     //               | [var:I_arr] val: 1 |,       |
+		     //               | [var:Ir_arr] val: 1 |,      |                 
+	             //               |udf| }"                   undefined
+				
+var S = "cB3bC2A1a";
+var rs = S.sort();    // rs = "123ABCabc"
+
+// or
+
+a = { 6, 3, 7, 2, 9, 4, 1, 8, 0, 5 };
+		
+a.ssort_cmp([](auto a, auto b) {
+	return b < a;
+},true);
+a._str().prnt(); //  {9,8,7,6,5,4,3,2,1,0}
+a.ssort_cmp([](auto a, auto b) {
+	return b < a;
+},false);
+a._str().prnt(); //  {0,1,2,3,4,5,6,7,8,9}
+		
+a = { 3, 7, "Abc", 2, 9, "ABC", 1, 0 };
+		
+a.ssort_cmp([](auto a, auto b) {
+	if (a.is_str()) {
+		if (b.is_str()) return b < a;
+	} else if (a.is_int() || a.is_double()) {
+		if (b.is_int() || b.is_double()) return b < a;
+		else if (b.is_str()) return true;
+	}
+	return false;
+});
+a._str().prnt();  //  {"ABC","Abc",0,1,2,3,7,9}
+                  //  {9,7,3,2,1,0,"Abc","ABC"} (reverse=true)
+
+```
+
+```java
+
+var a = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, x;
+		
+x = a.sample(5);   // x = "{7,8,2,7,6}"
+x = a.sample();    // x = "{8,6,5,7,5,1,7,4,6}"
+				
+var s = "ABCDEFGHIJKLMNOPQ";
+		
+x = s.sample(10);  // x = "LMIEOLPAMN"
+x = s.sample();    // x = "CCDQOMNLKHECMFJLN"
+				
+// unique sample
+		
+x = a.sample_unq(5);   // x = "{5,2,6,3,9}"
+x = a.sample_unq();    // x = "{2,6,3,4,1,5,7,9,8}"
+				
+x = s.sample_unq(10);  // x = "NGCDBKJLHM"
+x = s.sample_unq();    // x = "JMCQBAKNGILEOFHPD"
+
+```
+
+```java
+
+// arr:
+//         <--------------------
+//         -------------------->
+var a = { 'r', 'a', 'd', 'a', 'r' }, udf, x;
+res = a.equal(a.rbegin(), a.rend(), 0); // true: "radar" is a palindrome
+
+var a1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, a2 = { 3, 4, 5, 6, 7 };
+//                 '''''''''                     '''''''''
+x = a1.equal(a2.begin() += 1, a2.end() -= 1, 3, 3); // true
+
+// different types example:
+var a3 = { 1, 2.2, udf, true, { { { 1 } } }, "str", 'c', a.begin() };
+var a4 = { 1, 2.2, udf, true, { { { 1 } } }, "str", 'c', a.begin() };
+		
+x = a3.equal(a4.begin(), a4.end());  // true
+	   
+// str: (same rules as for arrays)
+  
+var s = "level";
+x = s.equal(s.rbegin(), s.rend()); // true: "level" is a palindrome
+
+// ----
+		
+a1 = { 1, 2, 3, 4 };
+a2 = { 1, 2, 3, 4 };
+		
+x = a1.mismatch(a2.begin(), a2.end()); //  false
+				
+a1 = { 1, 2, 3, 4 };                   // x = [ 4 ]{ | [var:I_arr] val: 4 |,
+a2 = { 1, 2, 3, 5 };                   //            | [var:I_arr] val: 5 |,
+	                               //            |udf|,
+x = a1.mismatch(a2.begin(), a2.end()); //            |udf| }
+				
+a1 = { 1, 2, { 1, 2, 3 }, 3 };         // x = [ 4 ]{ | [var:I_arr] val: {1,2,3} |,
+a2 = { 1, 2, { 1, 2, 4 }, 3 };         //            | [var:I_arr] val: {1,2,4} |,
+				       //            | [var:I_arr] val: 3 |,
+x = a1.mismatch(a2.begin(), a2.end()); //            | [var:I_arr] val: 4 | }
+		
+a1 = { 1, 2, { 1, 2, 3 }, 3 };         // x = [ 4 ]{ | [var:I_arr] val: {1,2,3} |,
+a2 = { 1, 2, { 1, 2 }, 3 };            //            | [var:I_arr] val: {1,2} |,
+				       //            | [var:I_arr] val: 3 |,
+x = a1.mismatch(a2.begin(), a2.end()); //            | [var:I_arr] at the end() | }
+				
+a1 = { 1, { 1, { 1, { 2, 3, { { { { 5 } } } } } } }, 2 };
+a2 = { 1, { 1, { 1, { 2, 3, { { { { 4 } } } } } } }, 2 };
+		
+x = a1.mismatch(a2.begin(), a2.end());
+		
+// x =  [ 4 ]{ | [var:I_arr] val: {1,{1,{2,3,{{{{5}}}}}}} |,
+//             | [var:I_arr] val: {1,{1,{2,3,{{{{4}}}}}}} |,
+//             | [var:I_arr] val: 5 |,
+//             | [var:I_arr] val: 4 | }
+
+```
+
+```java
+var a = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+a.sreverse();   // a = "{0,9,8,7,6,5,4,3,2,1}"
+		
+var s = "ABCDEFGHIJKLMNOPQ";
+s.sreverse();   // s = "QPONMLKJIHGFEDCBA
+
+```
+
+```java
+
+var a = { 1, 1, 1, 1, 1, 1, };
+a.fill(2, 1, 2);   // "{1,2,2,1,1,1}"
+a.fill(3, 6, 2);   // "{1,2,2,1,1,1,3,3}"
+
+var s = "......";
+s.fill('!', 1, 2);  // ".!!..."
+s.fill('!', 6, 2);  // ".!!...??"
+
+```
+
+```java
+...
+```
+
 ---
 >### Some ways to work with functions
 
@@ -291,7 +457,16 @@ for (var i = 0; i < S.length(); ++i) {
 for (auto i : A) {
 	i.prnt();     // 1 2.2 A BCD true
 }
-		
+	
+// or 
+
+b = S.begin();
+
+while (b) {
+	(*b).prnt();  // s t r i n g
+	++b;
+}
+	
 //...
 ```
 **note: Use prefix version of operator++,--() e.g  ++i,-\-i , because an additional temporary object is being created for i++,i-\- .**
@@ -700,8 +875,47 @@ var push_back(cch *X);
 var push_back(const str &X);
 var push_back( __iniL<var> X);
 ..
+var push_front(const var &X);
+var push_front(int X);
+var push_front(float X);
+var push_front(double X);
+var push_front(long X);
+var push_front(llong X);
+var push_front(ullong X);
+var push_front(char X);
+var push_front(cch *X);
+var push_front(const str &X);
+var push_front( __iniL<var> X);
+...
 var pop_back();
+var pop_front(); 
+..
+var sort_cmp(bool (*cmp)(var &a, var &b), bool reverse = false) const; 
+var& ssort_cmp(bool (*cmp)(var &a, var &b),bool reverse = false);
+var sort(bool reverse = false) const;
+var& ssort(bool reverse = false);
+var sample(size_t num = 0) const;
+var sample_unq(size_t num = 0) const;
+var reverse();
+var& sreverse();
+bool equal(const var &src_first, const var &src_last, //
+                                 size_t first = 0, size_t count = 0) const;
+var mismatch(const var &src_first, const var &src_last, //
+                                 size_t index = 0, size_t count = 0) const;
+..
+var& fill(const var &X, size_t index, size_t count);
+var& fill(int X, size_t index, size_t count);
+var& fill(float X, size_t index, size_t count);
+var& fill(double X, size_t index, size_t count);
+var& fill(long X, size_t index, size_t count);
+var& fill(llong X, size_t index, size_t count);
+var& fill(ullong X, size_t index, size_t count);
+var& fill(char X, size_t index, size_t count);
+var& fill(cch *X, size_t index, size_t count);
+var& fill(const str &X, size_t index, size_t count);
+var& fill(__iniL<var> X, size_t index, size_t count);
 ```
+
 - **array interfaces:** 
 
 ```java
@@ -805,21 +1019,9 @@ more time to the project, up to full time.<br>
 ( current bugs will be fixed immediately, regardless of the above -^ )**
     
 **to start:**
- - **extension of interfaces:** 
-    - `var push_front(...)` ( for [var:str/var:arr] )       
-    - `var pop_front()` ( for [var:str/var:arr] )
-    - `var equal(...)` ( for [var:str/var:arr] )       
-    - `var mismatch(...)` ( for [var:str/var:arr] )
-    - `var sort(...)` ( for [var:str/var:arr] )  
-    - `var sort_cmp(...)` ( for [var:str/var:arr] )     
-    - `var reverse(...)` ( for [var:str/var:arr] )
-    - `var sample(...)` ( for [var:str/var:arr] )
-    - `var sample_unq(...)` ( for [var:str/var:arr] )
-    - `var fill(...)` ( for [var:str/var:arr] )
-    - `var copy(...)` ( for [var:str/var:arr] )
-    - `var copy_to(...)` ( for [var:str/var:arr] )
+ - **extension of interfaces:**
     - **...**
-    - **and other of the most popular algorithms from the C++ Algorithm Library:<br>**
+    - **popular algorithms from the C++ Algorithm Library:<br>**
     - **...**
     - **your suggestions ... ( write me )<br>**
     
