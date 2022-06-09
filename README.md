@@ -11,16 +11,20 @@
   
    - **while initialization process: ( for further use )**
      - **string parsing**
-     - **creation of complex arrays, strings**
+     - **creation of complex arrays, strings, maps ( as storage objects )**
+     - **config files**
      - **...**
   
    - **sometimes as complex/variable return result and/or complex/variable
       parameter(s) for functions**
-  
-   - **complex arrays to maintain:**
+   
+   - **two sided network communication using a special map string (map_str)**
+   
+   - **complex arrays, maps to maintain:**
      - **errors**
      - **logs**
      - **exceptions**
+     - **states**
      - **...**
     
 ----
@@ -93,19 +97,31 @@ std::vector interfaces are implemented and can be used. ( for more details see v
  
 ```java	
 var s = "STR";
-var a = { { "arr" }, { 2 } }, udf;
-
+var a = { { "arr" }, { 2 } }, udf, map, pmap;
+map.map_set(""
+	"   { math: { const: pi: 3.141593; "
+	"                    e:  2.718282; "
+	"           }"
+	"   }");
+	pmap = map.map_get("math:const:e");
+	
 //    int(longlong)              
-//        |            string    iterator: I_str   another arrays                 bool
-//        |              |               |           |   / /    \                  |
-var A = { 1, 0.555, "..text..", 'c', s.begin(), udf, a, { { 3 }, { a.begin() } }, true, var( { }) };
-//             |                 |               |                     |                      |
-//           double             char          undefined            iterator: I_arr        empty array
-//
+//        |            string    iterator: I_str    another arrays               
+//        |              |               |           |   / /     |
+var A = { 1, 0.555, "..text..", 'c', s.begin(), udf, a, { { 3 }, { a.begin() } },
+//              |                |               |                     |
+//	maps  double            char          undefined           iterator: I_arr
+//       |
+	map, true, var( { }), pmap };
+//            |      |           |  
+//          bool   empty array  map-pointer: var:P_map
+
 // note: all var:X are acceptable                 
 //                                            
-A._str().prnt(); // {1,0.555000,"..text..",'c',| [var:I_str] val: S |,|udf|,{ {"arr"},{2}},
-//                  { {3},{| [var:I_arr] val: {"arr"} |}},true,{}}
+A._str().prnt(); // {1,0.555000,"..text..",'c',| [var:I_str] val: 'S' |,
+//                  |udf|,{ {"arr"},{2}},{ {3},{| [var:I_arr] val: {"arr"} |}},
+//                  {math:{const:e:2.718282;pi:3.141593;} },true,{},
+//                  | [var:P_map] val: 2.718282 |}
 // or
 A.prnt();        // [ 9 ]{ 1,
 //                         0.555000,
@@ -117,8 +133,13 @@ A.prnt();        // [ 9 ]{ 1,
 //                                [ 1 ]{ 2 } },
 //                         [ 2 ]{ [ 1 ]{ 3 },
 //                                [ 1 ]{ | [var:I_arr] val: {"arr"} | } },
+//                         { math: { const: e: 2.718282;
+//                                          pi: 3.141593;
+//                                 }
+//                         },
 //                         true,
-//                         { } }
+//                         { },
+//                         | [var:P_map] val: 2.718282 | }
 
 // ...
 ```
@@ -173,33 +194,595 @@ std::cout << ii << std::endl;	     //     456
 // ...
 ```
 ---
->### Strings/Arrays
+>### Maps
+
+**Maps are convenient tool with access by field-name.** 
+
+**In my opinion var:map could be used:**  
+- **for config files**
+- **for transfer through network (as special 'map string')**
+- **maintenance of the: errors,logs,exceptions,...**
+- **while runtime as storage objects**
+- **... etc**
+
+```java
+// MAP_SET: - Takes c++ 'like' string (null-terminated) and parse it to the var:map.
+
+var x;
+ 
+// I. Common map_set syntax:
+ 
+x.map_set(""
+	" { cars: { germany: { MercedesBenz: B_Class: 2; "
+	"                                    C_Class: 3; "
+	"                    } "
+	"                    Opel: 4; "
+	"                    BMW: 5;  "
+	"         } "
+	"         { american: Dodge: 5;    "
+	"                     Lincoln: 9;  "
+	"                     Ford: 7;     "
+	"         } "
+	"         other: 6; "  // ................... (1)
+	" } "                  // |                 |
+	" { movies: { action: _1: \" No Time to Die \";                "
+	"                     _2: \" Mission: Impossible - Fallout \"; "
+	"                     _3: \"...\"; "
+	"           } "
+	"           { fiction: _1: \" Edge Of Tomorrow \"; "
+	"                      _2: \" The Martian \";      "
+	"                      _3: \"...\";                "
+	"           } "
+	"           undefined:; "
+	" } "
+	" { math: pi: 3.141593; "
+	"         e:  2.718282; "
+	" }");
+// 	                               ^
+x.prnt(); // the output will have the same format, but without extra slashes
+		
+// !!!!!!!!!!!!! Note: data are always stored in sorted ascii order !!!!!!!!!!!!!
+		
+// II. Simple map_set syntax:               // ...
+                                            // { germany: BMW: 5;
+x.map_set("cars:germany:Volkswagen:3;");    //            { MercedesBenz: B_Class: 2;
+                                            //                            C_Class: 3;
+                                            //            }
+                                            //            Opel: 4;
+                                            //            Volkswagen: 3;  <-- reassigned
+                                            //  }
+                                            //  ...
+	                                          
+// III. Complex-mask map_set syntax:        // { cars: { Italy: Fiat: 2;  <-- new
+                                            //         }
+x.map_set("{ cars: { france: Renault: 7;"   //         { american: Dodge: 0;   <-- reassigned
+	  "                  Peugeot: 4;"   //                     Ford: 0;    <-- reassigned
+	  "        }"                       //                     Lincoln: 0; <-- reassigned
+	  "        { american: Dodge: 0;"   //         }
+	  "                    Lincoln: 0;" //         { france: Peugeot: 7;  <-- new
+	  "                    Ford: 0;"    //                   Renault: 4;  <-- new
+          "        }"                       //         }
+	  "        other: 10;"              //         { germany: BMW: 4;         
+	  "        Italy: Fiat: 2;"         //                    { MercedesBenz: B_Class: 2;
+	  "}");                             //                                    C_Class: 3;
+	                                    //                    } 
+	                                    //                    Opel: 4;
+		                            //                    Volkswagen: 3;
+		                            //         } 
+	                                    //         other: 10;  <-- reassigned
+			  	            // }
+			                    // ...
+				      
+// IV. Direct map_set case:
+
+if (var w = x.map_get( "cars:germany:MercedesBenz:C_Class")) {  // ...
+							        // { MercedesBenz: B_Class: 2;
+     *w = 100;                                                  //                 C_Class: 100;
+							        //                           ^
+} else var("fail").prnt();                                      // }                 reassigned
+							        // ...
+								
+// V. List map_set case:
+	
+var lm;                                                               // s1: "s1";
+                                                                      // s2: "s2";
+lm = var().set_map("");                                               // s3: "...";
+m = var().map_set("v1:1;v2:2;v3:3;s1:\"s1\";s2:\"s2\";s3:\"...\";");  // v1: 1;	
+					                              // v2: 2;
+					                              // v3: 3;
+/*	
+* Notes about slashes '\':
+*	
+* You have to use slashes for const char* literals (1)  and use 
+* map_fread()-rules ( see map_fread() [R] ) for hand made strings 
+* like: char*(null-terminated),std::string.
+*
+* const char* literals:
+*  	          3+"            3+\
+* the rules are: \\\" for " and \\\\ for \
+*/
+                                                // ...
+x.map_set("dir: \" D:\\\\music\\\\Accept \";"); // dir: " D:\music\Accept "; // (win) 
+                                                // ...
+                                               
+x.map_set("txt: \" Saying \\\"Stop the car\\\" was a mistake \";");
+// ...
+// txt: " Saying "Stop the car" was a mistake ";
+// ...
+
+/*                 3+3+\\           3+\+3+"
+* Also possible: \\\\\\\\ -> \\ or \\\\\\\" -> \" and so on.
+*/
+ 
+...
+```
+```java
+// MAP_GET: - Getting values from the var:map.
+
+var x;
+x.map_set(""
+	" { cars: { germany: { MercedesBenz: B_Class: 2; "
+	"                                    C_Class: 3; "
+	"                    } "
+	"         } "
+	" } "                    
+	" { movies: { action: _1: \" No Time to Die \"; "
+	"           } "
+	" } ");
+ 
+// Good to use: (with checks)
+		
+var w;
+		                         // ...
+if ((w = x.map_get("cars:germany"))) {   // { MercedesBenz: B_Class: 2;
+    (*w).prnt();  // print -->           //                 C_Class: 3;
+} else var("fail").prnt();               // }
+			                 // ...
+	
+if ((w = x.map_get("cars:germany:MercedesBenz:C_Class"))) {
+	
+    *w = 100; // direct map_set
+
+} else var("fail").prnt();
+
+if ((w = x.map_get("movies:action:_1"))) {
+
+    (*w).push_back(":) :) :)"); // just changes value
+	
+} else var("fail").prnt();
+
+            // { cars: { germany: { MercedesBenz: B_Class: 2;
+            //                                    C_Class: 100; <-- reassigned
+	    //                    }     
+            //         }               
+	    // }
+	    // { movies: { action: _1: " No Time to Die :) :) :)"; <-- changed
+            //           }
+            // }
+	                
+// excp:                              // excp: [ invalid_map_pointer ] [ var:P_map ]
+w = x.map_get("movies: fiction:_1");  // at:   var& operator*()
+//(*w).prnt(); // <--- excp           // dscr: field not exist or became invalid
+	    
+...
+```
+```java
+// MAP_REM: - Remove value(s) from the var:map. 
+
+var x;
+x.map_set(""
+	" { cars: { germany: { MercedesBenz: B_Class: 2; "
+	"                                    C_Class: 3; "
+	"                    } "
+	"                    Opel: 4; "
+	"                    BMW: 5;  "
+	"         } "
+	"         { american: Dodge: 5;    "
+	"                     Lincoln: 9;  "
+	"                     Ford: 7;     "
+	"         } "
+	"         other: 6; "
+	" } ");
+			    
+// I. Removes a field: 		    
+  
+x.map_rem("cars:germany:MercedesBenz:C_Class");
+   
+// { cars: { american: Dodge: 5;
+//                     Ford: 7;
+//                     Lincoln: 9;
+//         }
+//         { germany: BMW: 5;
+//                    { MercedesBenz: B_Class: 2;
+//                    }
+//                    Opel: 4;
+//         }
+//         other: 6;
+// }
+                      
+// II. Removes a group of fields:                 
+
+x.map_rem("cars:american");
+
+// { cars: { germany: BMW: 5;
+//                    { MercedesBenz: B_Class: 2;
+//                    }
+//                    Opel: 4;
+//         }
+//         other: 6;
+// }                                             
+          
+// III. Removes a complex group of fields:     
+                                                  
+x.map_rem("cars");
+  
+// { }   <-- Or you can use x.map_free() to get the same result.
+
+...
+```
+```java
+// MAP_FOREACH: - Iterations on the var:map fields. (main purpose is collection of information)
+
+var x;
+		
+//depth:     1        2             3            4 
+x.map_set(""
+        " { cars: { germany: { MercedesBenz: B_Class: 2; "
+        "                                    C_Class: 3; "
+        "                    } "
+        "                    Opel: 4; "
+        "                    BMW: 5;  "
+        "         } "
+        " } "
+//depth:       1        2      3
+        " { movies: { action: _1: \" No Time to Die \"; "
+	"                     _2: \" Mission: Impossible - Fallout \"; "
+	"                     _3: \"...\"; "
+	"           } "
+	" }"
+	" val: 123; ");
+		
+struct CTX {
+	int tot = 0;
+	// ...
+} _ctx;
+		
+// -----                                                 iterations order: 
+		
+x.map_foreach([](auto field, auto val, auto ctx) {       // cars         |
+	//                                               // germany      |
+	CTX *_ctx_ = (CTX*) ctx; // explicit cast        // BMW          |
+	//                                               // MercedesBenz |
+	++_ctx_->tot;            // doing the work       // B_Class      |
+	var(field).prnt();                               // C_Class      |
+	//                                               // Opel         |
+	return var::map::nxt;    // continue             // movies       |
+	//                                               // action       |
+},&_ctx);                                                // _1           |
+//   ^ pass the context pointer                          // _2           |
+//                                                       // _3           |
+//                                                       // val          V
+
+// -----
+		
+x.map_foreach([](auto field, auto val, auto ctx) {       // cars         |
+						         // germany      |
+	var(field).prnt();                               // movies       |
+        return var::map::nxt;                            // action       |
+							 // val          V
+},0, 2);
+//   ^ set the depth
+		
+// ----- ex*  If you really want to change value while iterating you need 
+//            to drop 'const' i.e. const_cast<var&>(val).do_something().
+//            ( it's safe, but (!) )
+		
+x.map_foreach([](auto field, auto val, auto ctx) {
+			
+	if (val.is_map()) { 
+	    const_cast<var&>(val) =  //
+		  	var().map_set("{new_field: pi: 3.141593; e: 2.718282;}");
+	    
+	    //  (!)
+	    //  When you set one var:map to another var:map(current) you can get 
+	    //  'infinite recursion' and catch [ map_max_depth ]
+	    //  (because 'map_foreach' will go into newly created var:map etc .. ). 
+	    //  So you need to use var::map::skp to skip the newly created var:map
+	    //  or take control of it by yourself
+	    //
+	    //  You can also skip (by var::map::skp) the current var:map if
+	    //  it doesn't make sense to go into it.
+	   
+	    return var::map::skp;
+        }
+			
+       // other cases:
+			
+       const_cast<var&>(val) = 777;
+       return var::map::nxt;
+			
+},&_ctx);
+		//            reassigned
+		//                ^
+		//                |
+		// { cars: { new_field: e: 2.718282;
+		//                |     pi: 3.141593;
+		//         }      |
+		// }              |
+		// { movies: { new_field: e: 2.718282;
+		//                        pi: 3.141593;
+		//           }
+		// }
+		// val: 777; <-- reassigned
+
+...
+```
+```java
+// MAP_FREAD: - Getting data from the file with name 'fname' and parse it to the var:map.
+
+file: "map" (example of the file)
+ 
+{ cars: { germany: { MercedesBenz: B_Class: 2;
+                                   C_Class: 3;
+	           }
+		   Opel: 4;
+		   BMW: 5;
+	 }
+	 { american: Dodge: 5;
+                     Lincoln: 9;
+                     Ford: 7;
+         }
+	 other: 6;               .................. (1)
+	 }                       |                |
+         { movies: { action: _1: " No Time to Die ";
+                             _2: " Mission: Impossible - Fallout ";
+	                     _3: "...";
+                   }
+	           { fiction: _1: " Edge Of Tomorrow ";
+                              _2: " The Martian ";
+	                      _3: "...";
+		   }
+	           undefined:;
+}
+{ math: pi: 3.141593;
+        e:  2.718282;
+}
+temperature: -20;  
+		 
+// Good to use: (with checks)
+		
+var x, w;
+		
+if ((w = x.map_fread("bad_map_name"))[0]) {
+	x.prnt();
+} else w[1].prnt(); // err: Unable to open file
+
+if ((w = x.map_fread("map"))[0]) {
+	x.prnt(); // ok ->  now it can be used like var:map
+} else w[1].prnt();
+
+/*
+*  Notes about slashes '\':
+*                                
+*  - no need to use slashes for string values (1)
+*                      1+"          1+\
+*  - [R] the rules are: \" for " and \\ for \  
+*                1+\+1+\       1+\+1+"
+*  - also possible: \\\\ -> \\ or \\\" -> \" and so on
+*  
+*/
+
+// MAP_FWRITE: - Writes data to the file with name 'fname'. 
+   
+// NOTE: - All var:I_str,var:Ir_str,var:I_arr,var:Ir_arr,var:P_map 
+//	   will be defined as var::udf(undefined). (because of nothing to store)
+//	 - var:arr (array) also will be defined as var::udf. (at the moment)
+//	   ! but you can freely use them at run time !
+
+// Some changes:
+
+srand((*x.map_get("cars:germany:MercedesBenz:C_Class")). //
+		   _str().sample()._int());
+		
+*(x.map_get("temperature")) = rand();
+*(x.map_get("cars:germany:MercedesBenz:C_Class")) = rand();
+		
+// write to file:
+		
+if (var w = x.map_fwrite("map")[0]) {
+	var("ok").prnt();
+} else w[1].prnt(); // err-string	
+		
+// NOTE: map_fread/map_fwrite are not thread safe (at the moment)
+
+...
+```
+```java
+// MAP_STR: - Makes special 'map-string' that can be easily parse back to the var:map.
+//            It can be used: for network transfer, in files defined by user,
+//            in databases, other ways ..
+
+var x, s;
+x.map_set(""
+	" { cars: { germany: { MercedesBenz: B_Class: 2; "
+	"                                    C_Class: 3; "
+	"                    } "
+	"                    Opel: 4; "
+	"                    BMW: 5;  "
+	"          } "
+	"          { american: Dodge: 5;    "
+	"                      Lincoln: 9;  "
+	"                      Ford: 7;     "
+	"          } "
+	"          str: \" Saying \\\"Stop the car\\\" \"; "
+	"          udf:; "
+	" } ");
+		
+                  // {cars:{american:Dodge:5;Ford:7;Lincoln:9;}{germany:BMW:5;
+s = x.map_str();  // {MercedesBenz:B_Class:2;C_Class:3;}Opel:4;}str:" Saying \"Stop
+                  // the car\" ";udf:;}
+
+s = x.map_str(true); // formatted output (with spaces and newlines)         
+
+...
+```
+```java
+// INVALID POINTER OF THE MAP.
+// The are four main causes of invalid map pointers:
+
+// I/II. Set/Remove cases:
+
+var map;
+var p1; // <-------------is become invalidate-----------------.
+var p2; // <-------------is become invalidate---------------. | 
+//                                                          | | 
+map.map_set(""	//                                          | | 
+		" { cars: { germany: MercedesBenz: 6; "//   | | 
+		"                    Opel: 4;         "//   | | 
+		"                    BMW: 5;          "//   | | 
+		"         }"//                              | | 
+		" }");//                                    | | 
+//                                                          | | 
+p1 = map.map_get("cars:germany:Opel"); //                   | |  
+p2 = map.map_get("cars:germany:BMW");  //                   | | 
+//                                                          | | 
+map.map_rem("cars:germany:Opel");  //-----case(rem)---------|-' 
+p1.prnt(); // | [var:P_map] is invalid |                    |   
+map.map_set("cars:germany:0;");    //-----case(reasign)-----'
+p2.prnt(); // | [var:P_map] is invalid |
+
+// III. Source destroy case: 
+
+var ext_p1; // <-----------------------------------------------.
+//                            are become invalidate            |
+var ext_p2; // <-----------------------------------------------.
+//                                                             |
+{ //                                                           |
+    var __map; //                                              |
+    __map.map_set("" //                                        |
+		" { cars: { germany: MercedesBenz: 6; "//      |
+		"                    Opel: 4;         "//      |
+		"                    BMW: 5;          "//      |
+		"         }"//                                 |
+		" }");//                                       |
+//                                                             |
+ext_p1 = __map.map_get("cars:germany:Opel"); //                |
+ext_p1.prnt(); // | [var:P_map] val: 4 |                       |
+ext_p2 = __map.map_get("cars:germany:BMW");  //                |
+ext_p2.prnt(); // | [var:P_map] val: 5 |                       |
+//                                                             |
+}//                                                            |
+//   cause:                                                    |       
+//   end of the block scope -> source (__map) is destroyed --->'
+		
+ext_p1.prnt(); // | [var:P_map] is invalid |
+ext_p2.prnt(); // | [var:P_map] is invalid |
+		
+// IV. Field not exist:
+
+var p = map.map_get("cars:xxx");
+p.prnt(); // | [var:P_map] is invalid |
+
+// use
+         //  excp: [ invalid_map_pointer ] [ var:P_map ]
+//(*p);  //  at:   var& operator*()
+         //  dscr: field not exist or became invalid
+	 
+...
+```
+```java
+// MAP_EQUAL/MAP_MISMATCH. (examples)
+
+var m1, m2, m3, m4, x;
+m1.map_set(""
+	" { cars: { germany: MercedesBenz: 6; "
+	"                    Opel: 4;         "
+	"                    BMW: 5;          "
+	"         }"
+	" }");
+	
+m3.map_set(""
+	" { cars: { germany: MercedesBenz: 6; " // different
+	"                    Opel: 4;         " // sizes  
+	"         }"
+	" }");
+
+m4.map_set(""
+	" { cars: { germany: MercedesBenz: 6; " // different
+	"                    Opel: 4;         " // fields
+	"                    BMW_x: 5;        "
+	"         }"
+	" }");
+
+m2 = m1; // copy: m1 -> m2
+
+x = m1.map_mismatch(m2);    // false
+x = m1.map_equal(m2), ;     // true
+
+m2.map_set("cars:germany:Opel:777;"); // change value
+		
+x = m1.map_mismatch(m2);  // ------> [ 3 ]{ "cars:germany:Opel",
+x = m1.map_equal(m2);     // false          | [var:P_map] val: 4 |,
+                          //                | [var:P_map] val: 777 | }
+
+x = m1.map_mismatch(m3);  // ------> [ 3 ]{ "cars:germany",
+x = m1.map_equal(m3);     // false          | [var:P_map] val: BMW:5;MercedesBenz:6;Opel:4; |,
+                          //                | [var:P_map] val: MercedesBenz:6;Opel:4; | }
+
+x = m1.map_mismatch(m4);  // ------> [ 3 ]{ "cars:germany:BMW",
+x = m1.map_equal(m4);     // false          | [var:P_map] val: 5 |,      
+                          //                | [var:P_map] is invalid | }
+//                                                              ^
+//                                                    sign of fields mismatch
+
+...
+```
+---
+>### Strings/Arrays/Maps
 
 ```java
 
 var s = "str", sb = s.begin(), srb = s.rbegin(), udf;
 var a = { 1 }, ab = a.begin(), arb = a.rbegin();
-		
-var A = { a, sb, "AB", ab, 2.5, "ABC", false, var({ }), srb, { 1, 2 }, // 
-         'A', udf, 1, arb, 'B', true };
-		
-var ra = A.sort();   // ra = "[ 14 ]{ false,                     booleans
-		     //               true,                         |
-		     //               1,                         numbers 
-		     //               2.500000,                     |
-		     //               'A',                        chars
-		     //               'B',                          |
-		     //               "AB",                      strings
-		     //               "ABC",                        |
-		     //               { },                        arrays
-		     //               [ 1 ]{ 1 },                   |
-		     //               [ 2 ]{ 1,                     |
-	             //                      2 },                   |
-		     //               | [var:I_str] val: s |,    iterators
-		     //               | [var:Ir_str] val: r |,      |
-		     //               | [var:I_arr] val: 1 |,       |
-		     //               | [var:Ir_arr] val: 1 |,      |                 
-	             //               |udf| }"                   undefined
+
+var map, pmap1, pmap2;
+map.map_set(""
+	" { cars: { germany: MercedesBenz: 6; "
+	"                    Opel: 4;         "
+	"                    BMW: 5;          "
+	"         }"
+	" }");
+pmap1 = map.map_get("cars:germany:BMW");
+pmap2 = map.map_get("cars:germany:Opel");
+
+var A = { a, sb, "AB", ab, 2.5, "ABC", false, var( { }), srb, { 1, 2 }, //
+		pmap2, 'A', udf, 1, map, var(), arb, 'B', true, pmap1 };
+
+var ra = A.sort();   // ra = "[ 20 ]{ false,                            booleans
+		     //               true,                                |
+		     //               1,                                numbers 
+		     //               2.500000,                            |
+		     //               'A',                               chars
+		     //               'B',                                 |
+		     //               "AB",                             strings
+		     //               "ABC",                               |
+		     //               { },                               arrays
+		     //               [ 1 ]{ 1 },                          |
+		     //               [ 2 ]{ 1,                            |
+		     //                      2 },                          |
+		     //               { cars: { american: Dodge: 5;       maps
+		     //                                   Ford: 7;         |
+		     //                                   Lincoln: |udf|;  | 
+		     //                       }                            |
+	    	     //               },                                   |
+	     	     //               | [var:I_str] val: s |,          iterators
+	             //               | [var:Ir_str] val: r |,             |
+	     	     //               | [var:I_arr] val: 1 |,              |
+	             //               | [var:Ir_arr] val: 1 |,             |
+		     //               | [var:P_map] val: 4 |,         map-pointers
+		     //               | [var:P_map] val: 5 |,              |
+		     //               |udf|,                           undefined
+		     //               |udf| }                              |
 				
 var S = "cB3bC2A1a";
 var rs = S.sort();    // rs = "123ABCabc"
@@ -268,9 +851,11 @@ var a1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, a2 = { 3, 4, 5, 6, 7 };
 x = a1.equal(a2.begin() += 1, a2.end() -= 1, 3, 3); // true
 
 // different types example:
-var a3 = { 1, 2.2, udf, true, { { { 1 } } }, "str", 'c', a.begin() };
-var a4 = { 1, 2.2, udf, true, { { { 1 } } }, "str", 'c', a.begin() };
-		
+
+var m = var().map_set("x:1;y:2;z:3;");
+var a3 = { 1, 2.2, udf, true, { { { 1 } } }, "str", m, 'c', a.begin() };
+var a4 = { 1, 2.2, udf, true, { { { 1 } } }, "str", m, 'c', a.begin() };
+
 x = a3.equal(a4.begin(), a4.end());  // true
 	   
 // str: (same rules as for arrays)
@@ -305,10 +890,22 @@ a2 = { 1, { 1, { 1, { 2, 3, { { { { 4 } } } } } } }, 2 };
 		
 x = a1.mismatch(a2.begin(), a2.end());
 		
-// x =  [ 4 ]{ | [var:I_arr] val: {1,{1,{2,3,{{{{5}}}}}}} |,
-//             | [var:I_arr] val: {1,{1,{2,3,{{{{4}}}}}}} |,
+// x =  [ 4 ]{ | [var:I_arr] val: {1,{1,{2,3,{ { { {5}}}}}}} |,
+//             | [var:I_arr] val: {1,{1,{2,3,{ { { {4}}}}}}} |,
 //             | [var:I_arr] val: 5 |,
 //             | [var:I_arr] val: 4 | }
+
+a1 = { 1, 2, 3, { 5, var().map_set("x:1;y:2;z:3;"), 6 }, 4 };
+a2 = { 1, 2, 3, { 5, var().map_set("x:1;y:777;z:3;"), 6 }, 4 };
+ 
+x = a1.mismatch(a2.begin(), a2.end());
+  
+// x = [ 4 ]{ | [var:I_arr] val: {5,x:1;y:2;z:3;,6} |,
+//            | [var:I_arr] val: {5,x:1;y:777;z:3;,6} |,
+//            | [var:I_arr] val: x:1;y:2;z:3; |,
+//            | [var:I_arr] val: x:1;y:777;z:3; | }
+       
+// ...
 
 ```
 
@@ -336,7 +933,6 @@ s.fill('!', 6, 2);  // ".!!...??"
 ```java
 ...
 ```
-
 ---
 >### Some ways to work with functions
 
@@ -788,6 +1384,8 @@ bool is_double() const noexcept;
 bool is_char() const noexcept;
 bool is_str() const noexcept;
 bool is_arr() const noexcept;
+bool is_map() const noexcept; 
+bool is_P_map() const noexcept;
 bool is_itr() const noexcept;
 bool is_I_str() const noexcept;
 bool is_Ir_str() const noexcept;
@@ -923,6 +1521,23 @@ void initArr() noexcept;
 var join(char sep = 0) const;
 var& sjoin(char sep = 0);
 ```
+- **map interfaces:** 
+
+```java
+var& map_init() noexcept;
+var& map_set(cch *map);
+var map_get(cch *map) const;
+var map_rem(cch *map);
+var& map_free();
+void map_foreach(var::map (*fun)(char *field,const var &val, void *ctx),  //
+			         void *ctx = 0, int depth = 0) const
+var map_fread(cch *fname);
+var map_fwrite(cch *fname) const;
+var map_str(bool format = 0) const;
+bool map_equal(const var& map) const;
+var map_mismatch(const var& map) const;
+```
+
 - **string interfaces:** 
 
 ```java
@@ -1014,7 +1629,7 @@ var _str() const;
 ># Plans
   
 **If this project receives feedback ( if it will be of interest to at least 
-someone at all ), or financially supported => this motivates me to devote 
+someone at all ), or financially supported (see var.h) => this motivates me to devote 
 more time to the project, up to full time.<br>
 ( current bugs will be fixed immediately, regardless of the above -^ )**
     
@@ -1026,7 +1641,10 @@ more time to the project, up to full time.<br>
     - **your suggestions ... ( write me )<br>**
     
  - **extension of var:internal types:**                                                 
-      - **var:map ( like:**  `x["item"]["something"]...` **)**                            
+      - **var:map:**
+        - **extension of interfaces**      <- [now in process]
+        - `begin()/end()` **iterations**   <- [now in process]
+        - ...                           
       - **var:storage: ( access to data through var:map )**
         - **var:storage <-> hdd/ssd**
         - **var:storage:client <-> var:storage:server (maybe)**
