@@ -141,7 +141,7 @@ A.prnt();        // [ 9 ]{ 1,
 //                         { },
 //                         | [var:P_map] val: 2.718282 | }
 
-// ...
+...
 ```
 **deep access**
 
@@ -163,7 +163,7 @@ A._str().prnt();  // {'>',{'>',{'>',{" ! deep insert ! :) "},'<'},'<'},'<'}
 var x = A.join();
 x.prnt();         // >>> ! deep insert ! :) <<<
 
-// ...
+...
 ```
 ---
 >### Strings
@@ -191,7 +191,7 @@ s.prnt();                            // "12345678"
 int ii = s.substr(3, 3)._int();
 std::cout << ii << std::endl;	     //     456
 				
-// ...
+...
 ```
 ---
 >### Maps
@@ -502,18 +502,18 @@ x.map_foreach([](auto field, auto val, auto ctx) {
        return var::map::nxt;
 			
 },&_ctx);
-		//            reassigned
-		//                ^
-		//                |
-		// { cars: { new_field: e: 2.718282;
-		//                |     pi: 3.141593;
-		//         }      |
-		// }              |
-		// { movies: { new_field: e: 2.718282;
-		//                        pi: 3.141593;
-		//           }
-		// }
-		// val: 777; <-- reassigned
+//            reassigned
+//                ^
+//                |
+// { cars: { new_field: e: 2.718282;
+//                |     pi: 3.141593;
+//         }      |
+// }              |
+// { movies: { new_field: e: 2.718282;
+//                        pi: 3.141593;
+//           }
+// }
+// val: 777; <-- reassigned
 
 ...
 ```
@@ -691,7 +691,7 @@ p.prnt(); // | [var:P_map] is invalid |
 ...
 ```
 ```java
-// MAP_EQUAL/MAP_MISMATCH. (examples)
+// MAP_EQUAL/MAP_MISMATCH:
 
 var m1, m2, m3, m4, x;
 m1.map_set(""
@@ -741,6 +741,7 @@ x = m1.map_equal(m4);     // false          | [var:P_map] val: 5 |,
 >### Strings/Arrays/Maps
 
 ```java
+// SORT/S(elf)SORT:
 
 var s = "str", sb = s.begin(), srb = s.rbegin(), udf;
 var a = { 1 }, ab = a.begin(), arb = a.rbegin();
@@ -756,7 +757,7 @@ pmap1 = map.map_get("cars:germany:BMW");
 pmap2 = map.map_get("cars:germany:Opel");
 
 var A = { a, sb, "AB", ab, 2.5, "ABC", false, var( { }), srb, { 1, 2 }, //
-		pmap2, 'A', udf, 1, map, var(), arb, 'B', true, pmap1 };
+		  pmap2, 'A', udf, 1, map, var(), arb, 'B', true, pmap1 };
 
 var ra = A.sort();   // ra = "[ 20 ]{ false,                            booleans
 		     //               true,                                |
@@ -814,9 +815,11 @@ a.ssort_cmp([](auto a, auto b) {
 a._str().prnt();  //  {"ABC","Abc",0,1,2,3,7,9}
                   //  {9,7,3,2,1,0,"Abc","ABC"} (reverse=true)
 
+...
 ```
 
 ```java
+// SAMPLE/SAMPLE_UNQ:
 
 var a = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, x;
 		
@@ -836,9 +839,11 @@ x = a.sample_unq();    // x = "{2,6,3,4,1,5,7,9,8}"
 x = s.sample_unq(10);  // x = "NGCDBKJLHM"
 x = s.sample_unq();    // x = "JMCQBAKNGILEOFHPD"
 
+...
 ```
 
 ```java
+// EQUAL/MISMATCH:
 
 // arr:
 //         <--------------------
@@ -905,20 +910,26 @@ x = a1.mismatch(a2.begin(), a2.end());
 //            | [var:I_arr] val: x:1;y:2;z:3; |,
 //            | [var:I_arr] val: x:1;y:777;z:3; | }
        
-// ...
-
+...
 ```
 
 ```java
+// REVERS/S(elf)REVERS:
+
+var x;
 var a = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
-a.sreverse();   // a = "{0,9,8,7,6,5,4,3,2,1}"
-		
-var s = "ABCDEFGHIJKLMNOPQ";
-s.sreverse();   // s = "QPONMLKJIHGFEDCBA
+x = a.reverse(); // x = "{0,9,8,7,6,5,4,3,2,1}" 
+a.sreverse();    // a = "{0,9,8,7,6,5,4,3,2,1}"
 
+var s = "ABCDEFGHIJKLMNOPQ";
+x = s.reverse();  // x = "QPONMLKJIHGFEDCBA
+s.sreverse();     // s = "QPONMLKJIHGFEDCBA
+
+...
 ```
 
 ```java
+// FILL:
 
 var a = { 1, 1, 1, 1, 1, 1, };
 a.fill(2, 1, 2);   // "{1,2,2,1,1,1}"
@@ -928,11 +939,9 @@ var s = "......";
 s.fill('!', 1, 2);  // ".!!..."
 s.fill('!', 6, 2);  // ".!!...??"
 
-```
-
-```java
 ...
 ```
+
 ---
 >### Some ways to work with functions
 
@@ -985,11 +994,11 @@ _add("book", 1.55, 10)._str().prnt();  // {"ok",{"book",1.550000,10}}
 //_add(1.55, "apple", 10);             // exception thrown '[ unsupported_operation ]'
 _add(0.3, 100, 777)._str().prnt();     // {"ok",{0.300000,100,777}} 
 //                                     // (slippage of a bad argument '0.3')
-
-// ...
-		
+	
 //  P.S.
 //  JS approach is bad in this case, given the capabilities of C++ 
+
+...
 ```
 ---
 >### Iterators ( loops )
@@ -1025,7 +1034,7 @@ while (b != e) {
 	++b;
 }
 
-// ...
+...
 ```
 **shorter versions:**
 
@@ -1063,7 +1072,7 @@ while (b) {
 	++b;
 }
 	
-//...
+...
 ```
 **note: Use prefix version of operator++,--() e.g  ++i,-\-i , because an additional temporary object is being created for i++,i-\- .**
 
@@ -1154,7 +1163,7 @@ var sb_ext;
 //*ab_ext; // excp: [ invalid_iterator ]
 //*sb_ext; // excp: [ invalid_iterator ]
 
-// ...
+...
 ```
 **one more case**
 
@@ -1173,9 +1182,8 @@ itr = (ss = s.substr(1, 4)).find("i");
 *itr;       // 'i'
 itr.pos();  //  2
 
-// ...
+...
 ```
-**. . .** 
 
 ---
 >### Self-transformations ( some cases )
@@ -1211,7 +1219,7 @@ bb += 'c', bb.prnt();      // bool -> string : 0c
 		
 bbb += "XYZ", bbb.prnt();  // bool -> string : 1XYZ
 		
-// ... 
+... 
 ```
 ---
 >### Few words about &,*
@@ -1238,7 +1246,7 @@ while (i < (int) A.length()) {
 }		
 A._str().prnt();  // {2,3,4}
 
-// ... 
+... 
 ```
 **more details:**
 - **arrays**
@@ -1270,7 +1278,7 @@ pA.push_back("push"); // -> memory relocation  <- (or reassign e.g. pA="some val
 //                                V		
 //pidx0->prnt();      //    undefined behavior
 
-// ...
+...
 ```
 
 - **strings**
@@ -1304,9 +1312,9 @@ S.resize(20);     // -> memory relocation  <- (or reassign e.g. S="some val")
 
 // > * < (same problem as with &) ...
 
-// ...
+...
 ```
-**Conclusion: If use of &,* is conscious -> then why not :)**
+**Conclusion: If use of &,\* is conscious -> then why not :)**
 
 ---
 >### Simple parsing example
@@ -1357,6 +1365,8 @@ do {
 (var("back: \"") += S + "\"").prnt();  
 
 // back: "v1:i=1;v2:d=3.141;v3:s=string;v4:c=A;" 
+
+...
 ```
 >###  Currently supported interfaces: ( for more details see var.h ) 
 
