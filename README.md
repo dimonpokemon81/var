@@ -31,7 +31,7 @@
 
 >### Please help to improve the project
   
-**If it seems to you, or something is clearly not working as it should,
+**If it seems to you that something is clearly not working as it should,
 please write me. <br> ( as short example/description/other way ) <br>**
 - **email:  dimon19811@outlook.com**             
 - **GitHub: [https://github.com/dimonpokemon81/var/issues](https://github.com/dimonpokemon81/var/issues)**
@@ -123,7 +123,7 @@ A._str().prnt(); // {1,0.555000,"..text..",'c',| [var:I_str] val: 'S' |,
 //                  {math:{const:e:2.718282;pi:3.141593;} },true,{},
 //                  | [var:P_map] val: 2.718282 |}
 // or
-A.prnt();        // [ 9 ]{ 1,
+A.prnt();       // [ 12 ]{ 1,
 //                         0.555000,
 //                         "..text..",      ("STR" -> first character)
 //                         'c',               ^
@@ -241,7 +241,7 @@ x.map_set(""
 // 	                               ^
 x.prnt(); // the output will have the same format, but without extra slashes
 		
-// !!!!!!!!!!!!! Note: data are always stored in sorted ascii order !!!!!!!!!!!!!
+// !!!!!!!!!!!!! Note: data are always stored in sorted ascii-order !!!!!!!!!!!!!
 		
 // II. Simple map_set syntax:               // ...
                                             // { germany: BMW: 5;
@@ -360,9 +360,9 @@ if ((w = x.map_get("movies:action:_1"))) {
             //           }
             // }
 	                
-// excp:                              // excp: [ invalid_map_pointer ] [ var:P_map ]
-w = x.map_get("movies: fiction:_1");  // at:   var& operator*()
-//(*w).prnt(); // <--- excp           // dscr: field not exist or became invalid
+// excp:                                        // excp: [ invalid_map_pointer ] [ var:P_map ]
+//w = x.map_get("movies: fiction:_1"); <- excp  // at:   var& operator*()
+//(*w).prnt(); // <--- excp                     // dscr: field not exist or became invalid
 	    
 ...
 ```
@@ -577,7 +577,7 @@ if ((w = x.map_fread("map"))[0]) {
 // NOTE: - All var:I_str,var:Ir_str,var:I_arr,var:Ir_arr,var:P_map 
 //	   will be defined as var::udf(undefined). (because of nothing to store)
 //	 - var:arr (array) also will be defined as var::udf. (at the moment)
-//	   ! but you can freely use them at run time !
+//	   ! but you can freely use them at runtime !
 
 // Some changes:
 
