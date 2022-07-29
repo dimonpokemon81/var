@@ -1242,7 +1242,7 @@ while (i < (int) A.length()) {
 	*p += 1;   //  | 
 	p->prnt(); //  |  use as you want
 	// ...         |
-	i++;
+	++i;
 }		
 A._str().prnt();  // {2,3,4}
 
