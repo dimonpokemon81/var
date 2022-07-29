@@ -771,9 +771,9 @@ var ra = A.sort();   // ra = "[ 20 ]{ false,                            booleans
 		     //               [ 1 ]{ 1 },                          |
 		     //               [ 2 ]{ 1,                            |
 		     //                      2 },                          |
-		     //               { cars: { american: Dodge: 5;       maps
-		     //                                   Ford: 7;         |
-		     //                                   Lincoln: |udf|;  | 
+		     //               { cars: { germany: BMW: 5;          maps
+		     //                                  MercedesBenz: 6;  |
+		     //                                  Opel: 4;          | 
 		     //                       }                            |
 	    	     //               },                                   |
 	     	     //               | [var:I_str] val: s |,          iterators
