@@ -10,7 +10,7 @@
  *   
  *  Please support the project:
  *  
- *  BitCoin: bc1q8lqmrhcp584zltk3hqh32chnnrc55m4hpm5zd5
+ *  BitCoin: 
  *  Patreon: https://www.patreon.com/CppJS
  *  
  *  Please help to improve the project:
