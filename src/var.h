@@ -5480,7 +5480,7 @@ bool operator!=(const str &lv, const var &rv);
 std::ostream& operator<<(std::ostream &os, const var &rv);
 std::istream& operator>>(std::istream &is, const var &rv);
 
-#include"var.cpp" // comment this when making static-lib
+//#include"var.cpp" // comment out this when making static-lib
 
 #endif
 //

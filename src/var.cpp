@@ -6842,7 +6842,7 @@ private:
 	var mk_str(cch *bf, int i, int trg, int m = 0) const {
 		
 		int _i = i, lft = 0;
-		char ch;
+		char ch = ' ';
 		var _str = "";
 		
 		// <---------- get start
@@ -6876,7 +6876,7 @@ private:
 	var mk_str_slsh_str(cch *bf, int i, int trg) const {
 		
 		int _i = i, lft = 0, x1 = 0, x2 = 0;
-		char ch;
+		char ch = ' ';
 		var _str = "";
 		
 		// <---------- get start
